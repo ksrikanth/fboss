@@ -4599,7 +4599,9 @@ std::pair<strings::parityEncoderEn, Child<::std::int32_t, ::apache::thrift::type
 std::pair<strings::thpEn, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
 std::pair<strings::setPrecode, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
 std::pair<strings::pre3, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
-std::pair<strings::driverSwing, Child<::std::int32_t, ::apache::thrift::type_class::integral>>>;
+std::pair<strings::driverSwing, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::innerEyeNeg, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::innerEyePos, Child<::std::int32_t, ::apache::thrift::type_class::integral>>>;
   using ChildrenById = fatal::tuple<   std::pair<std::integral_constant<apache::thrift::field_id_t, 1>, Child<::std::int16_t, ::apache::thrift::type_class::integral>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 2>, Child<::std::int16_t, ::apache::thrift::type_class::integral>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 3>, Child<::std::int16_t, ::apache::thrift::type_class::integral>>,
@@ -4619,7 +4621,9 @@ std::pair<strings::driverSwing, Child<::std::int32_t, ::apache::thrift::type_cla
    std::pair<std::integral_constant<apache::thrift::field_id_t, 17>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 18>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 19>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
-   std::pair<std::integral_constant<apache::thrift::field_id_t, 20>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>>;
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 20>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 21>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 22>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>>;
   template <typename Name>
   using NameToId = fatal::tuple<std::pair<strings::pre, std::integral_constant<apache::thrift::field_id_t, 1>>,
 std::pair<strings::pre2, std::integral_constant<apache::thrift::field_id_t, 2>>,
@@ -4640,7 +4644,9 @@ std::pair<strings::parityEncoderEn, std::integral_constant<apache::thrift::field
 std::pair<strings::thpEn, std::integral_constant<apache::thrift::field_id_t, 17>>,
 std::pair<strings::setPrecode, std::integral_constant<apache::thrift::field_id_t, 18>>,
 std::pair<strings::pre3, std::integral_constant<apache::thrift::field_id_t, 19>>,
-std::pair<strings::driverSwing, std::integral_constant<apache::thrift::field_id_t, 20>>>::template type_of<Name>;
+std::pair<strings::driverSwing, std::integral_constant<apache::thrift::field_id_t, 20>>,
+std::pair<strings::innerEyeNeg, std::integral_constant<apache::thrift::field_id_t, 21>>,
+std::pair<strings::innerEyePos, std::integral_constant<apache::thrift::field_id_t, 22>>>::template type_of<Name>;
 
   template <typename Name>
   using TypeFor = typename Children::template type_of<Name>;
@@ -4673,6 +4679,8 @@ std::pair<strings::driverSwing, std::integral_constant<apache::thrift::field_id_
     STRUCT_CHILD_GETTERS(setPrecode, 18);
     STRUCT_CHILD_GETTERS(pre3, 19);
     STRUCT_CHILD_GETTERS(driverSwing, 20);
+    STRUCT_CHILD_GETTERS(innerEyeNeg, 21);
+    STRUCT_CHILD_GETTERS(innerEyePos, 22);
 
   template <apache::thrift::field_id_t __id>
   auto operator()(const std::integral_constant<apache::thrift::field_id_t, __id>&) {
@@ -4696,6 +4704,8 @@ std::pair<strings::driverSwing, std::integral_constant<apache::thrift::field_id_
     else if constexpr (__id == 18) { return setPrecode(); }
     else if constexpr (__id == 19) { return pre3(); }
     else if constexpr (__id == 20) { return driverSwing(); }
+    else if constexpr (__id == 21) { return innerEyeNeg(); }
+    else if constexpr (__id == 22) { return innerEyePos(); }
   }
 
   template <typename T, T... Values>
@@ -11214,7 +11224,21 @@ std::pair<strings::instgTableStartRow, Child<::std::int32_t, ::apache::thrift::t
 std::pair<strings::parityEncoderEn, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
 std::pair<strings::thpEn, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
 std::pair<strings::dcTermEn, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
-std::pair<strings::setPrecode, Child<::std::int32_t, ::apache::thrift::type_class::integral>>>;
+std::pair<strings::setPrecode, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgBoost1Start, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgBoost1Step, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgBoost1Stop, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgBoost2OrHrStart, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgBoost2OrHrStep, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgBoost2OrHrStop, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgC1Start1p7, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgC1Step1p7, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgC1Stop1p7, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgDfeStart1p7, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgDfeStep1p7, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgDfeStop1p7, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::enableScanSelection, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::instgScanUseSrSettings, Child<::std::int32_t, ::apache::thrift::type_class::integral>>>;
   using ChildrenById = fatal::tuple<   std::pair<std::integral_constant<apache::thrift::field_id_t, 1>, Child<::std::int16_t, ::apache::thrift::type_class::integral>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 2>, Child<::std::int16_t, ::apache::thrift::type_class::integral>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 3>, Child<::std::int16_t, ::apache::thrift::type_class::integral>>,
@@ -11229,7 +11253,21 @@ std::pair<strings::setPrecode, Child<::std::int32_t, ::apache::thrift::type_clas
    std::pair<std::integral_constant<apache::thrift::field_id_t, 12>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 13>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 14>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
-   std::pair<std::integral_constant<apache::thrift::field_id_t, 15>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>>;
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 15>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 16>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 17>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 18>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 19>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 20>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 21>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 22>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 23>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 24>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 25>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 26>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 27>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 28>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 29>, Child<::std::int32_t, ::apache::thrift::type_class::integral>>>;
   template <typename Name>
   using NameToId = fatal::tuple<std::pair<strings::ctlCode, std::integral_constant<apache::thrift::field_id_t, 1>>,
 std::pair<strings::dspMode, std::integral_constant<apache::thrift::field_id_t, 2>>,
@@ -11245,7 +11283,21 @@ std::pair<strings::instgTableStartRow, std::integral_constant<apache::thrift::fi
 std::pair<strings::parityEncoderEn, std::integral_constant<apache::thrift::field_id_t, 12>>,
 std::pair<strings::thpEn, std::integral_constant<apache::thrift::field_id_t, 13>>,
 std::pair<strings::dcTermEn, std::integral_constant<apache::thrift::field_id_t, 14>>,
-std::pair<strings::setPrecode, std::integral_constant<apache::thrift::field_id_t, 15>>>::template type_of<Name>;
+std::pair<strings::setPrecode, std::integral_constant<apache::thrift::field_id_t, 15>>,
+std::pair<strings::instgBoost1Start, std::integral_constant<apache::thrift::field_id_t, 16>>,
+std::pair<strings::instgBoost1Step, std::integral_constant<apache::thrift::field_id_t, 17>>,
+std::pair<strings::instgBoost1Stop, std::integral_constant<apache::thrift::field_id_t, 18>>,
+std::pair<strings::instgBoost2OrHrStart, std::integral_constant<apache::thrift::field_id_t, 19>>,
+std::pair<strings::instgBoost2OrHrStep, std::integral_constant<apache::thrift::field_id_t, 20>>,
+std::pair<strings::instgBoost2OrHrStop, std::integral_constant<apache::thrift::field_id_t, 21>>,
+std::pair<strings::instgC1Start1p7, std::integral_constant<apache::thrift::field_id_t, 22>>,
+std::pair<strings::instgC1Step1p7, std::integral_constant<apache::thrift::field_id_t, 23>>,
+std::pair<strings::instgC1Stop1p7, std::integral_constant<apache::thrift::field_id_t, 24>>,
+std::pair<strings::instgDfeStart1p7, std::integral_constant<apache::thrift::field_id_t, 25>>,
+std::pair<strings::instgDfeStep1p7, std::integral_constant<apache::thrift::field_id_t, 26>>,
+std::pair<strings::instgDfeStop1p7, std::integral_constant<apache::thrift::field_id_t, 27>>,
+std::pair<strings::enableScanSelection, std::integral_constant<apache::thrift::field_id_t, 28>>,
+std::pair<strings::instgScanUseSrSettings, std::integral_constant<apache::thrift::field_id_t, 29>>>::template type_of<Name>;
 
   template <typename Name>
   using TypeFor = typename Children::template type_of<Name>;
@@ -11273,6 +11325,20 @@ std::pair<strings::setPrecode, std::integral_constant<apache::thrift::field_id_t
     STRUCT_CHILD_GETTERS(thpEn, 13);
     STRUCT_CHILD_GETTERS(dcTermEn, 14);
     STRUCT_CHILD_GETTERS(setPrecode, 15);
+    STRUCT_CHILD_GETTERS(instgBoost1Start, 16);
+    STRUCT_CHILD_GETTERS(instgBoost1Step, 17);
+    STRUCT_CHILD_GETTERS(instgBoost1Stop, 18);
+    STRUCT_CHILD_GETTERS(instgBoost2OrHrStart, 19);
+    STRUCT_CHILD_GETTERS(instgBoost2OrHrStep, 20);
+    STRUCT_CHILD_GETTERS(instgBoost2OrHrStop, 21);
+    STRUCT_CHILD_GETTERS(instgC1Start1p7, 22);
+    STRUCT_CHILD_GETTERS(instgC1Step1p7, 23);
+    STRUCT_CHILD_GETTERS(instgC1Stop1p7, 24);
+    STRUCT_CHILD_GETTERS(instgDfeStart1p7, 25);
+    STRUCT_CHILD_GETTERS(instgDfeStep1p7, 26);
+    STRUCT_CHILD_GETTERS(instgDfeStop1p7, 27);
+    STRUCT_CHILD_GETTERS(enableScanSelection, 28);
+    STRUCT_CHILD_GETTERS(instgScanUseSrSettings, 29);
 
   template <apache::thrift::field_id_t __id>
   auto operator()(const std::integral_constant<apache::thrift::field_id_t, __id>&) {
@@ -11291,6 +11357,20 @@ std::pair<strings::setPrecode, std::integral_constant<apache::thrift::field_id_t
     else if constexpr (__id == 13) { return thpEn(); }
     else if constexpr (__id == 14) { return dcTermEn(); }
     else if constexpr (__id == 15) { return setPrecode(); }
+    else if constexpr (__id == 16) { return instgBoost1Start(); }
+    else if constexpr (__id == 17) { return instgBoost1Step(); }
+    else if constexpr (__id == 18) { return instgBoost1Stop(); }
+    else if constexpr (__id == 19) { return instgBoost2OrHrStart(); }
+    else if constexpr (__id == 20) { return instgBoost2OrHrStep(); }
+    else if constexpr (__id == 21) { return instgBoost2OrHrStop(); }
+    else if constexpr (__id == 22) { return instgC1Start1p7(); }
+    else if constexpr (__id == 23) { return instgC1Step1p7(); }
+    else if constexpr (__id == 24) { return instgC1Stop1p7(); }
+    else if constexpr (__id == 25) { return instgDfeStart1p7(); }
+    else if constexpr (__id == 26) { return instgDfeStep1p7(); }
+    else if constexpr (__id == 27) { return instgDfeStop1p7(); }
+    else if constexpr (__id == 28) { return enableScanSelection(); }
+    else if constexpr (__id == 29) { return instgScanUseSrSettings(); }
   }
 
   template <typename T, T... Values>
@@ -20141,7 +20221,9 @@ std::pair<strings::portName_, Child<::std::string, ::apache::thrift::type_class:
 std::pair<strings::macsecStats, ChildThriftPath<::facebook::fboss::MacsecStats, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
 std::pair<strings::inLabelMissDiscards_, Child<::std::int64_t, ::apache::thrift::type_class::integral>>,
 std::pair<strings::queueWatermarkLevel_, ChildThriftPath<::std::map<::std::int16_t, ::std::int64_t>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
-std::pair<strings::inCongestionDiscards_, Child<::std::int64_t, ::apache::thrift::type_class::integral>>>;
+std::pair<strings::inCongestionDiscards_, Child<::std::int64_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::inAclDiscards_, Child<::std::int64_t, ::apache::thrift::type_class::integral>>,
+std::pair<strings::inTrapDiscards_, Child<::std::int64_t, ::apache::thrift::type_class::integral>>>;
   using ChildrenById = fatal::tuple<   std::pair<std::integral_constant<apache::thrift::field_id_t, 1>, Child<::std::int64_t, ::apache::thrift::type_class::integral>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 2>, Child<::std::int64_t, ::apache::thrift::type_class::integral>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 3>, Child<::std::int64_t, ::apache::thrift::type_class::integral>>,
@@ -20184,7 +20266,9 @@ std::pair<strings::inCongestionDiscards_, Child<::std::int64_t, ::apache::thrift
    std::pair<std::integral_constant<apache::thrift::field_id_t, 52>, ChildThriftPath<::facebook::fboss::MacsecStats, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 53>, Child<::std::int64_t, ::apache::thrift::type_class::integral>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 54>, ChildThriftPath<::std::map<::std::int16_t, ::std::int64_t>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
-   std::pair<std::integral_constant<apache::thrift::field_id_t, 55>, Child<::std::int64_t, ::apache::thrift::type_class::integral>>>;
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 55>, Child<::std::int64_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 56>, Child<::std::int64_t, ::apache::thrift::type_class::integral>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 57>, Child<::std::int64_t, ::apache::thrift::type_class::integral>>>;
   template <typename Name>
   using NameToId = fatal::tuple<std::pair<strings::inBytes_, std::integral_constant<apache::thrift::field_id_t, 1>>,
 std::pair<strings::inUnicastPkts_, std::integral_constant<apache::thrift::field_id_t, 2>>,
@@ -20228,7 +20312,9 @@ std::pair<strings::portName_, std::integral_constant<apache::thrift::field_id_t,
 std::pair<strings::macsecStats, std::integral_constant<apache::thrift::field_id_t, 52>>,
 std::pair<strings::inLabelMissDiscards_, std::integral_constant<apache::thrift::field_id_t, 53>>,
 std::pair<strings::queueWatermarkLevel_, std::integral_constant<apache::thrift::field_id_t, 54>>,
-std::pair<strings::inCongestionDiscards_, std::integral_constant<apache::thrift::field_id_t, 55>>>::template type_of<Name>;
+std::pair<strings::inCongestionDiscards_, std::integral_constant<apache::thrift::field_id_t, 55>>,
+std::pair<strings::inAclDiscards_, std::integral_constant<apache::thrift::field_id_t, 56>>,
+std::pair<strings::inTrapDiscards_, std::integral_constant<apache::thrift::field_id_t, 57>>>::template type_of<Name>;
 
   template <typename Name>
   using TypeFor = typename Children::template type_of<Name>;
@@ -20284,6 +20370,8 @@ std::pair<strings::inCongestionDiscards_, std::integral_constant<apache::thrift:
     STRUCT_CHILD_GETTERS(inLabelMissDiscards_, 53);
     STRUCT_CHILD_GETTERS(queueWatermarkLevel_, 54);
     STRUCT_CHILD_GETTERS(inCongestionDiscards_, 55);
+    STRUCT_CHILD_GETTERS(inAclDiscards_, 56);
+    STRUCT_CHILD_GETTERS(inTrapDiscards_, 57);
 
   template <apache::thrift::field_id_t __id>
   auto operator()(const std::integral_constant<apache::thrift::field_id_t, __id>&) {
@@ -20330,6 +20418,8 @@ std::pair<strings::inCongestionDiscards_, std::integral_constant<apache::thrift:
     else if constexpr (__id == 53) { return inLabelMissDiscards_(); }
     else if constexpr (__id == 54) { return queueWatermarkLevel_(); }
     else if constexpr (__id == 55) { return inCongestionDiscards_(); }
+    else if constexpr (__id == 56) { return inAclDiscards_(); }
+    else if constexpr (__id == 57) { return inTrapDiscards_(); }
   }
 
   template <typename T, T... Values>
@@ -20549,7 +20639,8 @@ std::pair<strings::sysPortStatsMap, ChildThriftPath<::std::map<::std::int16_t, :
 std::pair<strings::switchDropStatsMap, ChildThriftPath<::std::map<::std::int16_t, ::facebook::fboss::HwSwitchDropStats>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
 std::pair<strings::flowletStats, ChildThriftPath<::facebook::fboss::HwFlowletStats, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
 std::pair<strings::phyStats, ChildThriftPath<::std::map<::std::string, ::facebook::fboss::phy::PhyStats>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
-std::pair<strings::flowletStatsMap, ChildThriftPath<::std::map<::std::int16_t, ::facebook::fboss::HwFlowletStats>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>>;
+std::pair<strings::flowletStatsMap, ChildThriftPath<::std::map<::std::int16_t, ::facebook::fboss::HwFlowletStats>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
+std::pair<strings::trappedPktsDropped, Child<::std::int64_t, ::apache::thrift::type_class::integral>>>;
   using ChildrenById = fatal::tuple<   std::pair<std::integral_constant<apache::thrift::field_id_t, 1>, ChildThriftPath<folly::F14FastMap<::std::string, ::facebook::fboss::HwPortStats>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 2>, ChildThriftPath<::std::map<::std::string, ::facebook::fboss::HwTrunkStats>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 3>, ChildThriftPath<::facebook::fboss::HwResourceStats, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
@@ -20566,7 +20657,8 @@ std::pair<strings::flowletStatsMap, ChildThriftPath<::std::map<::std::int16_t, :
    std::pair<std::integral_constant<apache::thrift::field_id_t, 15>, ChildThriftPath<::std::map<::std::int16_t, ::facebook::fboss::HwSwitchDropStats>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 16>, ChildThriftPath<::facebook::fboss::HwFlowletStats, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
    std::pair<std::integral_constant<apache::thrift::field_id_t, 17>, ChildThriftPath<::std::map<::std::string, ::facebook::fboss::phy::PhyStats>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
-   std::pair<std::integral_constant<apache::thrift::field_id_t, 18>, ChildThriftPath<::std::map<::std::int16_t, ::facebook::fboss::HwFlowletStats>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>>;
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 18>, ChildThriftPath<::std::map<::std::int16_t, ::facebook::fboss::HwFlowletStats>, ::facebook::fboss::fsdb::FsdbOperStatsRoot, Self>>,
+   std::pair<std::integral_constant<apache::thrift::field_id_t, 19>, Child<::std::int64_t, ::apache::thrift::type_class::integral>>>;
   template <typename Name>
   using NameToId = fatal::tuple<std::pair<strings::hwPortStats, std::integral_constant<apache::thrift::field_id_t, 1>>,
 std::pair<strings::hwTrunkStats, std::integral_constant<apache::thrift::field_id_t, 2>>,
@@ -20584,7 +20676,8 @@ std::pair<strings::sysPortStatsMap, std::integral_constant<apache::thrift::field
 std::pair<strings::switchDropStatsMap, std::integral_constant<apache::thrift::field_id_t, 15>>,
 std::pair<strings::flowletStats, std::integral_constant<apache::thrift::field_id_t, 16>>,
 std::pair<strings::phyStats, std::integral_constant<apache::thrift::field_id_t, 17>>,
-std::pair<strings::flowletStatsMap, std::integral_constant<apache::thrift::field_id_t, 18>>>::template type_of<Name>;
+std::pair<strings::flowletStatsMap, std::integral_constant<apache::thrift::field_id_t, 18>>,
+std::pair<strings::trappedPktsDropped, std::integral_constant<apache::thrift::field_id_t, 19>>>::template type_of<Name>;
 
   template <typename Name>
   using TypeFor = typename Children::template type_of<Name>;
@@ -20614,6 +20707,7 @@ std::pair<strings::flowletStatsMap, std::integral_constant<apache::thrift::field
     STRUCT_CHILD_GETTERS(flowletStats, 16);
     STRUCT_CHILD_GETTERS(phyStats, 17);
     STRUCT_CHILD_GETTERS(flowletStatsMap, 18);
+    STRUCT_CHILD_GETTERS(trappedPktsDropped, 19);
 
   template <apache::thrift::field_id_t __id>
   auto operator()(const std::integral_constant<apache::thrift::field_id_t, __id>&) {
@@ -20634,6 +20728,7 @@ std::pair<strings::flowletStatsMap, std::integral_constant<apache::thrift::field
     else if constexpr (__id == 16) { return flowletStats(); }
     else if constexpr (__id == 17) { return phyStats(); }
     else if constexpr (__id == 18) { return flowletStatsMap(); }
+    else if constexpr (__id == 19) { return trappedPktsDropped(); }
   }
 
   template <typename T, T... Values>

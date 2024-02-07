@@ -91,4 +91,30 @@ void SaiDebugCounterManager::setupAclDropCounter() {
           aclDropCounter_->adapterKey(),
           SaiDebugCounterTraits::Attributes::Index{});
 }
+
+void SaiDebugCounterManager::setupTrapDropCounter() {
+  if (!platform_->getAsic()->isSupported(
+          HwAsic::Feature::ANY_TRAP_DROP_COUNTER)) {
+    return;
+  }
+  // TODO
+}
+
+std::set<sai_stat_id_t> SaiDebugCounterManager::getConfiguredDebugStatIds()
+    const {
+  std::set<sai_stat_id_t> stats;
+  if (portL3BlackHoleCounter_) {
+    stats.insert(portL3BlackHoleCounterStatId_);
+  }
+  if (mplsLookupFailCounter_) {
+    stats.insert(mplsLookupFailCounterStatId_);
+  }
+  if (aclDropCounter_) {
+    stats.insert(aclDropCounterStatId_);
+  }
+  if (trapDropCounter_) {
+    stats.insert(trapDropCounterStatId_);
+  }
+  return stats;
+}
 } // namespace facebook::fboss

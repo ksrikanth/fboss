@@ -30,6 +30,7 @@ class AgentHwTest : public ::testing::Test {
   void SetUp() override;
   void TearDown() override;
   void tearDownAgentEnsemble(bool doWarmboot = false);
+  using StateUpdateFn = SwSwitch::StateUpdateFn;
 
  protected:
   template <
@@ -87,6 +88,14 @@ class AgentHwTest : public ::testing::Test {
 
   void runForever() const;
   std::shared_ptr<SwitchState> applyNewConfig(const cfg::SwitchConfig& config);
+  void applyNewState(StateUpdateFn fn, const std::string& name = "agent-test") {
+    return applyNewStateImpl(fn, name, false);
+  }
+  void applyNewStateTransaction(
+      StateUpdateFn fn,
+      const std::string& name = "agent-test-transaction") {
+    return applyNewStateImpl(fn, name, true);
+  }
 
   SwSwitch* getSw() const;
   const std::map<SwitchID, const HwAsic*> getAsics() const;
@@ -113,8 +122,17 @@ class AgentHwTest : public ::testing::Test {
       const std::vector<PortID>& ports);
 
   HwPortStats getLatestPortStats(const PortID& port);
+  virtual cfg::SwitchConfig initialConfig(const AgentEnsemble& ensemble) const;
+
+  cfg::SwitchConfig addCoppConfig(
+      const AgentEnsemble& ensemble,
+      const cfg::SwitchConfig& in) const;
 
  private:
+  void applyNewStateImpl(
+      StateUpdateFn fn,
+      const std::string& name,
+      bool transaction);
   /*
    * Derived classes have the option to not run verify on
    * certain DUTs. E.g. non controlling nodes in Multinode setups
@@ -124,8 +142,6 @@ class AgentHwTest : public ::testing::Test {
   }
 
   virtual bool hideFabricPorts() const;
-
-  virtual cfg::SwitchConfig initialConfig(const AgentEnsemble& ensemble) const;
 
   virtual std::vector<production_features::ProductionFeature>
   getProductionFeaturesVerified() const = 0;

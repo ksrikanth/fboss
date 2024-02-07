@@ -3,6 +3,7 @@
 #include "fboss/agent/test/AgentHwTest.h"
 #include "fboss/agent/HwAsicTable.h"
 #include "fboss/agent/hw/test/ConfigFactory.h"
+#include "fboss/agent/hw/test/HwTestCoppUtils.h"
 #include "fboss/lib/CommonUtils.h"
 
 DEFINE_bool(run_forever, false, "run the test forever");
@@ -135,16 +136,9 @@ bool AgentHwTest::hideFabricPorts() const {
 
 cfg::SwitchConfig AgentHwTest::initialConfig(
     const AgentEnsemble& ensemble) const {
-  // Before m-mpu agent test, use first Asic for initialization.
-  auto switchIds = ensemble.getSw()->getHwAsicTable()->getSwitchIDs();
-  CHECK_GE(switchIds.size(), 1);
-  auto asic =
-      ensemble.getSw()->getHwAsicTable()->getHwAsic(*switchIds.cbegin());
   return utility::onePortPerInterfaceConfig(
-      ensemble.getSw()->getPlatformMapping(),
-      asic,
+      ensemble.getSw(),
       ensemble.masterLogicalPortIds(),
-      asic->desiredLoopbackModes(),
       true /*interfaceHasSubnet*/);
 }
 
@@ -162,13 +156,17 @@ std::map<PortID, HwPortStats> AgentHwTest::getLatestPortStats(
   // Stats collection from SwSwitch is async, wait for stats
   // being available before returning here.
   std::map<PortID, HwPortStats> portStats;
+  std::unordered_set<PortID> toFetch{ports.begin(), ports.end()};
   checkWithRetry(
-      [&portStats, this]() {
+      [&portStats, this, &toFetch]() {
         auto switchStats = getSw()->getHwSwitchStatsExpensive();
         auto portMap = getSw()->getState()->getPorts();
         for (const auto& [_, hwStats] : switchStats) {
           for (const auto& [portName, stats] : *hwStats.hwPortStats()) {
-            portStats.insert({portMap->getPort(portName)->getID(), stats});
+            auto portId = portMap->getPort(portName)->getID();
+            if (toFetch.find(portId) != toFetch.end()) {
+              portStats.insert({portMap->getPort(portName)->getID(), stats});
+            }
           }
         }
         return !portStats.empty();
@@ -181,6 +179,29 @@ std::map<PortID, HwPortStats> AgentHwTest::getLatestPortStats(
 
 HwPortStats AgentHwTest::getLatestPortStats(const PortID& port) {
   return getLatestPortStats(std::vector<PortID>({port})).begin()->second;
+}
+
+void AgentHwTest::applyNewStateImpl(
+    StateUpdateFn fn,
+    const std::string& name,
+    bool transaction) {
+  agentEnsemble_->applyNewState(fn, name, transaction);
+}
+
+cfg::SwitchConfig AgentHwTest::addCoppConfig(
+    const AgentEnsemble& ensemble,
+    const cfg::SwitchConfig& in) const {
+  auto config = in;
+  // Before m-mpu agent test, use first Asic for initialization.
+  auto switchIds = ensemble.getSw()->getHwAsicTable()->getSwitchIDs();
+  CHECK_GE(switchIds.size(), 1);
+  auto asic =
+      ensemble.getSw()->getHwAsicTable()->getHwAsic(*switchIds.cbegin());
+  const auto& cpuStreamTypes =
+      asic->getQueueStreamTypes(cfg::PortType::CPU_PORT);
+  utility::setDefaultCpuTrafficPolicyConfig(config, asic);
+  utility::addCpuQueueConfig(config, asic, ensemble.isSai());
+  return config;
 }
 
 void initAgentHwTest(int argc, char* argv[], PlatformInitFn initPlatform) {

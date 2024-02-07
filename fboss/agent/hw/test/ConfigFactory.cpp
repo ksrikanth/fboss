@@ -231,6 +231,7 @@ std::unordered_map<PortID, cfg::PortProfileID> getSafeProfileIDs(
     const HwAsic* asic,
     const std::map<PortID, std::vector<PortID>>&
         controllingPortToSubsidaryPorts,
+    bool supportsAddRemovePort,
     std::optional<std::vector<PortID>> masterLogicalPortIds = std::nullopt) {
   std::unordered_map<PortID, cfg::PortProfileID> portToProfileIDs;
   const auto& plarformEntries = platformMapping->getPlatformPorts();
@@ -243,7 +244,9 @@ std::unordered_map<PortID, cfg::PortProfileID> getSafeProfileIDs(
            *plarformEntries.at(portID).supportedProfiles()) {
         if (auto subsumedPorts = profile.second.subsumedPorts();
             subsumedPorts && !subsumedPorts->empty()) {
-          // as long as subsumedPorts doesn't overlap with portSet, also safe
+          // Certain PortProfiles with higher speeds are safe, as long as
+          // subsumedPorts doesn't overlap with portSet, or subsumed ports not
+          // in masterLogicalPorts and platform supports add and remove ports
           if (std::none_of(
                   subsumedPorts->begin(),
                   subsumedPorts->end(),
@@ -252,7 +255,8 @@ std::unordered_map<PortID, cfg::PortProfileID> getSafeProfileIDs(
                                ports.begin(),
                                ports.end(),
                                PortID(subsumedPort)) != ports.end() &&
-                        (!masterLogicalPortIds.has_value() ||
+                        (!supportsAddRemovePort ||
+                         !masterLogicalPortIds.has_value() ||
                          std::find(
                              masterLogicalPortIds->begin(),
                              masterLogicalPortIds->end(),
@@ -320,7 +324,7 @@ std::unordered_map<PortID, cfg::PortProfileID> getSafeProfileIDs(
     }
 
     for (auto portID : ports) {
-      if (masterLogicalPortIds.has_value() &&
+      if (supportsAddRemovePort && masterLogicalPortIds.has_value() &&
           std::find(
               masterLogicalPortIds->begin(),
               masterLogicalPortIds->end(),
@@ -337,7 +341,8 @@ void securePortsInConfig(
     const PlatformMapping* platformMapping,
     const HwAsic* asic,
     cfg::SwitchConfig& config,
-    const std::vector<PortID>& ports) {
+    const std::vector<PortID>& ports,
+    bool supportsAddRemovePort) {
   // This function is to secure all ports in the input `ports` vector will be
   // in the config. Usually there're two main cases:
   // 1) all the ports in ports vector are from different group, so we don't need
@@ -373,8 +378,8 @@ void securePortsInConfig(
 
   // Make sure all the ports in portGroups use the safe profile in the config
   if (portGroups.size() > 0) {
-    for (const auto& [portID, profileID] :
-         getSafeProfileIDs(platformMapping, asic, portGroups, ports)) {
+    for (const auto& [portID, profileID] : getSafeProfileIDs(
+             platformMapping, asic, portGroups, supportsAddRemovePort, ports)) {
       auto portCfg = findCfgPortIf(config, portID);
       if (portCfg != config.ports()->end()) {
         portCfg->profileID() = profileID;
@@ -403,6 +408,7 @@ cfg::SwitchConfig genPortVlanCfg(
     const std::map<PortID, VlanID>& port2vlan,
     const std::vector<VlanID>& vlans,
     const std::map<cfg::PortType, cfg::PortLoopbackMode> lbModeMap,
+    bool supportsAddRemovePort,
     bool optimizePortProfile = true,
     bool enableFabricPorts = false) {
   cfg::SwitchConfig config;
@@ -463,7 +469,8 @@ cfg::SwitchConfig genPortVlanCfg(
   config.portQueueConfigs()[kFabricTxQueueConfig] = getFabTxQueueConfig();
 
   // Secure all ports in `ports` vector in the config
-  securePortsInConfig(platformMapping, asic, config, ports);
+  securePortsInConfig(
+      platformMapping, asic, config, ports, supportsAddRemovePort);
 
   // Port config
   auto kPortMTU = 9412;
@@ -530,6 +537,7 @@ void setPortToDefaultProfileIDMap(
     const std::shared_ptr<MultiSwitchPortMap>& ports,
     const PlatformMapping* platformMapping,
     const HwAsic* asic,
+    bool supportsAddRemovePort,
     std::optional<std::vector<PortID>> masterLogicalPortIds) {
   // Most of the platforms will have default ports created when the HW is
   // initialized. But for those who don't have any default port, we'll fall
@@ -552,6 +560,7 @@ void setPortToDefaultProfileIDMap(
         platformMapping,
         asic,
         getSubsidiaryPortIDs(platformMapping->getPlatformPorts()),
+        supportsAddRemovePort,
         masterLogicalPortIds);
     getPortToDefaultProfileIDMap().insert(
         safeProfileIDs.begin(), safeProfileIDs.end());
@@ -605,6 +614,7 @@ cfg::SwitchConfig oneL3IntfConfig(
       hwSwitch->getPlatform()->getPlatformMapping(),
       hwSwitch->getPlatform()->getAsic(),
       ports,
+      hwSwitch->getPlatform()->supportsAddRemovePort(),
       lbModeMap,
       true,
       baseVlanId);
@@ -614,11 +624,18 @@ cfg::SwitchConfig oneL3IntfConfig(
     const PlatformMapping* platformMapping,
     const HwAsic* asic,
     PortID port,
+    bool supportsAddRemovePort,
     const std::map<cfg::PortType, cfg::PortLoopbackMode>& lbModeMap,
     int baseVlanId) {
   std::vector<PortID> ports{port};
   return oneL3IntfNPortConfig(
-      platformMapping, asic, ports, lbModeMap, true, baseVlanId);
+      platformMapping,
+      asic,
+      ports,
+      supportsAddRemovePort,
+      lbModeMap,
+      true,
+      baseVlanId);
 }
 
 cfg::SwitchConfig oneL3IntfNoIPAddrConfig(
@@ -630,27 +647,28 @@ cfg::SwitchConfig oneL3IntfNoIPAddrConfig(
       hwSwitch->getPlatform()->getPlatformMapping(),
       hwSwitch->getPlatform()->getAsic(),
       ports,
+      hwSwitch->getPlatform()->supportsAddRemovePort(),
       lbModeMap,
       false /*interfaceHasSubnet*/);
 }
 
 cfg::SwitchConfig oneL3IntfTwoPortConfig(
-    const HwSwitch* hwSwitch,
+    const PlatformMapping* platformMapping,
+    const HwAsic* asic,
     PortID port1,
     PortID port2,
+    bool supportsAddRemovePort,
     const std::map<cfg::PortType, cfg::PortLoopbackMode>& lbModeMap) {
   std::vector<PortID> ports{port1, port2};
   return oneL3IntfNPortConfig(
-      hwSwitch->getPlatform()->getPlatformMapping(),
-      hwSwitch->getPlatform()->getAsic(),
-      ports,
-      lbModeMap);
+      platformMapping, asic, ports, supportsAddRemovePort, lbModeMap);
 }
 
 cfg::SwitchConfig oneL3IntfNPortConfig(
     const PlatformMapping* platformMapping,
     const HwAsic* asic,
     const std::vector<PortID>& ports,
+    bool supportsAddRemovePort,
     const std::map<cfg::PortType, cfg::PortLoopbackMode>& lbModeMap,
     bool interfaceHasSubnet,
     int baseVlanId,
@@ -671,6 +689,7 @@ cfg::SwitchConfig oneL3IntfNPortConfig(
       port2vlan,
       vlans,
       lbModeMap,
+      supportsAddRemovePort,
       optimizePortProfile);
 
   config.interfaces()->resize(1);
@@ -692,6 +711,29 @@ cfg::SwitchConfig oneL3IntfNPortConfig(
 }
 
 cfg::SwitchConfig onePortPerInterfaceConfig(
+    const PlatformMapping* platformMapping,
+    const HwAsic* asic,
+    const std::vector<PortID>& ports,
+    bool supportsAddRemovePort,
+    const std::map<cfg::PortType, cfg::PortLoopbackMode>& lbModeMap,
+    bool interfaceHasSubnet = true,
+    bool setInterfaceMac = true,
+    int baseIntfId = kBaseVlanId,
+    bool enableFabricPorts = false) {
+  return multiplePortsPerIntfConfig(
+      platformMapping,
+      asic,
+      ports,
+      supportsAddRemovePort,
+      lbModeMap,
+      interfaceHasSubnet,
+      setInterfaceMac,
+      baseIntfId,
+      1, /* portPerIntf*/
+      enableFabricPorts);
+}
+
+cfg::SwitchConfig onePortPerInterfaceConfig(
     const HwSwitch* hwSwitch,
     const std::vector<PortID>& ports,
     const std::map<cfg::PortType, cfg::PortLoopbackMode>& lbModeMap,
@@ -703,6 +745,7 @@ cfg::SwitchConfig onePortPerInterfaceConfig(
       hwSwitch->getPlatform()->getPlatformMapping(),
       hwSwitch->getPlatform()->getAsic(),
       ports,
+      hwSwitch->getPlatform()->supportsAddRemovePort(),
       lbModeMap,
       interfaceHasSubnet,
       setInterfaceMac,
@@ -712,23 +755,25 @@ cfg::SwitchConfig onePortPerInterfaceConfig(
 }
 
 cfg::SwitchConfig onePortPerInterfaceConfig(
-    const PlatformMapping* platformMapping,
-    const HwAsic* asic,
+    const SwSwitch* swSwitch,
     const std::vector<PortID>& ports,
-    const std::map<cfg::PortType, cfg::PortLoopbackMode>& lbModeMap,
     bool interfaceHasSubnet,
     bool setInterfaceMac,
     int baseIntfId,
     bool enableFabricPorts) {
-  return multiplePortsPerIntfConfig(
-      platformMapping,
+  // Before m-mpu agent test, use first Asic for initialization.
+  auto switchIds = swSwitch->getHwAsicTable()->getSwitchIDs();
+  CHECK_GE(switchIds.size(), 1);
+  auto asic = swSwitch->getHwAsicTable()->getHwAsic(*switchIds.cbegin());
+  return onePortPerInterfaceConfig(
+      swSwitch->getPlatformMapping(),
       asic,
       ports,
-      lbModeMap,
+      swSwitch->getPlatformSupportsAddRemovePort(),
+      asic->desiredLoopbackModes(),
       interfaceHasSubnet,
       setInterfaceMac,
       baseIntfId,
-      1, /* portPerIntf*/
       enableFabricPorts);
 }
 
@@ -736,6 +781,7 @@ cfg::SwitchConfig multiplePortsPerIntfConfig(
     const PlatformMapping* platformMapping,
     const HwAsic* asic,
     const std::vector<PortID>& ports,
+    bool supportsAddRemovePort,
     const std::map<cfg::PortType, cfg::PortLoopbackMode>& lbModeMap,
     bool interfaceHasSubnet,
     bool setInterfaceMac,
@@ -777,6 +823,7 @@ cfg::SwitchConfig multiplePortsPerIntfConfig(
       port2vlan,
       vlans,
       lbModeMap,
+      supportsAddRemovePort,
       true /*optimizePortProfile*/,
       enableFabricPorts);
   auto addInterface = [&config, baseVlanId](
@@ -889,7 +936,8 @@ cfg::SwitchConfig twoL3IntfConfig(
       ports,
       port2vlan,
       vlans,
-      lbModeMap);
+      lbModeMap,
+      hwSwitch->getPlatform()->supportsAddRemovePort());
 
   auto computeIntfId = [&config, &ports, &switchType, &vlans](auto idx) {
     if (switchType == cfg::SwitchType::NPU) {
@@ -1154,6 +1202,7 @@ cfg::SwitchConfig createUplinkDownlinkConfig(
         platformMapping,
         asic,
         masterLogicalPortIds,
+        supportsAddRemovePort,
         lbModeMap,
         interfaceHasSubnet,
         true,
@@ -1187,6 +1236,7 @@ cfg::SwitchConfig createUplinkDownlinkConfig(
       platformMapping,
       asic,
       uplinkMasterPorts,
+      supportsAddRemovePort,
       lbModeMap,
       interfaceHasSubnet,
       true /*setInterfaceMac*/,

@@ -112,6 +112,8 @@ DEFINE_bool(
 
 DECLARE_bool(intf_nbr_tables);
 
+DECLARE_bool(enable_acl_table_group);
+
 namespace facebook::fboss {
 
 namespace util {
@@ -1064,6 +1066,37 @@ void ThriftHandler::getAclTable(std::vector<AclEntryThrift>& aclTable) {
   }
 }
 
+void ThriftHandler::getAclTableGroup(AclTableThrift& aclTableEntry) {
+  auto log = LOG_THRIFT_CALL(DBG1);
+  ensureConfigured(__func__);
+  if (FLAGS_enable_acl_table_group) {
+    for (const auto& mIter :
+         std::as_const(*(sw_->getState()->getAclTableGroups()))) {
+      for (const auto& iter : std::as_const(*mIter.second)) {
+        auto aclStage = iter.first;
+        auto aclTableMap = sw_->getState()->getAclTablesForStage(aclStage);
+        if (aclTableMap) {
+          for (const auto& tableIter : std::as_const(*aclTableMap)) {
+            std::vector<AclEntryThrift> aclTable;
+            auto aclTableName = tableIter.first;
+            auto aclMap = tableIter.second->getAclMap().unwrap();
+            for (const auto& aclMapEntry : std::as_const(*aclMap)) {
+              const auto& aclEntry = aclMapEntry.second;
+              aclTable.push_back(populateAclEntryThrift(*aclEntry));
+            }
+            aclTableEntry.aclTableEntries_ref()[aclTableName] =
+                std::move(aclTable);
+          }
+        }
+      }
+    }
+  } else {
+    std::vector<AclEntryThrift> aclTable;
+    getAclTable(aclTable);
+    aclTableEntry.aclTableEntries_ref()["AclTable1"] = std::move(aclTable);
+  }
+}
+
 void ThriftHandler::getAggregatePort(
     AggregatePortThrift& aggregatePortThrift,
     int32_t aggregatePortIDThrift) {
@@ -1388,32 +1421,9 @@ void ThriftHandler::patchCurrentStateJSONForPaths(
 
   auto updateDsfStateFn = [this, switchId2SystemPorts, switchId2Rifs](
                               const std::shared_ptr<SwitchState>& in) {
-    auto currState = in;
-    for (const auto& [switchId, newSysPorts] : switchId2SystemPorts) {
-      auto it = switchId2Rifs.find(switchId);
-      if (it == switchId2Rifs.end()) {
-        throw FbossError(
-            "Both remoteSystemPorts and remoteRifs must be provided together for every switchID");
-      }
-
-      auto newRifs = it->second;
-      auto dsfNode = currState->getDsfNodes()->getNodeIf(switchId);
-      if (!dsfNode) {
-        throw FbossError("Could not find dsfNode for switchId: ", switchId);
-      }
-
-      auto newState = DsfStateUpdaterUtil::getUpdatedState(
-          currState,
-          sw_->getScopeResolver(),
-          newSysPorts,
-          newRifs,
-          dsfNode->getName(),
-          switchId);
-
-      currState = newState;
-    }
-
-    return currState;
+    auto newState = DsfStateUpdaterUtil::getUpdatedState(
+        in, sw_->getScopeResolver(), switchId2SystemPorts, switchId2Rifs);
+    return newState;
   };
 
   sw_->updateState(

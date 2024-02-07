@@ -95,9 +95,11 @@ class HwCoppTest : public HwLinkStateDependentTest {
 
   cfg::SwitchConfig getTrunkInitialConfig() const {
     auto cfg = utility::oneL3IntfTwoPortConfig(
-        getHwSwitch(),
+        getHwSwitch()->getPlatform()->getPlatformMapping(),
+        getHwSwitch()->getPlatform()->getAsic(),
         masterLogicalPortIds()[0],
         masterLogicalPortIds()[1],
+        getHwSwitch()->getPlatform()->supportsAddRemovePort(),
         getAsic()->desiredLoopbackModes());
     utility::setDefaultCpuTrafficPolicyConfig(cfg, this->getAsic());
     utility::addCpuQueueConfig(
@@ -1298,25 +1300,34 @@ TYPED_TEST(HwCoppTest, UnresolvedRoutesToLowPriQueue) {
 }
 
 TYPED_TEST(HwCoppTest, UnresolvedRouteNextHopToLowPriQueue) {
+  static const std::vector<RoutePrefixV6> routePrefixes = {
+      RoutePrefix<folly::IPAddressV6>{
+          folly::IPAddressV6{"2803:6080:d038:3063::"}, 64},
+      RoutePrefix<folly::IPAddressV6>{
+          folly::IPAddressV6{"2803:6080:d038:3065::1"}, 128}};
   auto setup = [=, this]() {
     this->setup();
     utility::EcmpSetupAnyNPorts6 ecmp6(this->getProgrammedState());
-    ecmp6.programRoutes(this->getRouteUpdater(), 1);
+    ecmp6.programRoutes(this->getRouteUpdater(), 1, routePrefixes);
   };
   // Different from UnresolvedRoutesToLowPriQueue as traffic is
   // destined to a remote route for which next hop is unresolved.
-  const auto randomNonsubnetUnicastIpAddress =
-      folly::IPAddressV6("2620:0:1cfe:face:b00c::4");
+  const auto randomNonsubnetUnicastIpAddresses = {
+      folly::IPAddressV6("2803:6080:d038:3063::1"),
+      folly::IPAddressV6("2803:6080:d038:3065::1")};
   auto verify = [=, this]() {
-    this->sendTcpPktAndVerifyCpuQueue(
-        utility::kCoppLowPriQueueId,
-        randomNonsubnetUnicastIpAddress,
-        utility::kNonSpecialPort1,
-        utility::kNonSpecialPort2,
-        std::nullopt,
-        0 /* trafficClass */,
-        std::nullopt,
-        true /* expectQueueHit */);
+    for (auto& randomNonsubnetUnicastIpAddress :
+         randomNonsubnetUnicastIpAddresses) {
+      this->sendTcpPktAndVerifyCpuQueue(
+          utility::kCoppLowPriQueueId,
+          randomNonsubnetUnicastIpAddress,
+          utility::kNonSpecialPort1,
+          utility::kNonSpecialPort2,
+          std::nullopt,
+          0 /* trafficClass */,
+          std::nullopt,
+          true /* expectQueueHit */);
+    }
   };
   this->verifyAcrossWarmBoots(setup, verify);
 }
