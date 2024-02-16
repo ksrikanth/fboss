@@ -145,7 +145,7 @@ void NonMonolithicHwSwitchHandler::clearPortStats(
 }
 
 std::vector<phy::PrbsLaneStats>
-NonMonolithicHwSwitchHandler::getPortAsicPrbsStats(int32_t /*portId*/) {
+NonMonolithicHwSwitchHandler::getPortAsicPrbsStats(PortID /*portId*/) {
   // TODO: implement this
   return {};
 }
@@ -178,7 +178,8 @@ std::shared_ptr<SwitchState> NonMonolithicHwSwitchHandler::stateChanged(
   return nullptr;
 }
 
-CpuPortStats NonMonolithicHwSwitchHandler::getCpuPortStats() const {
+CpuPortStats NonMonolithicHwSwitchHandler::getCpuPortStats(
+    bool /*getIncrement*/) const {
   throw FbossError("getCpuPortStats not implemented");
 }
 

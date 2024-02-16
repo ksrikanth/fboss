@@ -66,7 +66,7 @@ class MonolithicHwSwitchHandler : public HwSwitchHandler {
   void clearPortStats(
       const std::unique_ptr<std::vector<int32_t>>& ports) override;
 
-  std::vector<phy::PrbsLaneStats> getPortAsicPrbsStats(int32_t portId) override;
+  std::vector<phy::PrbsLaneStats> getPortAsicPrbsStats(PortID portId) override;
 
   void clearPortAsicPrbsStats(int32_t portId) override;
 
@@ -108,7 +108,7 @@ class MonolithicHwSwitchHandler : public HwSwitchHandler {
     return platform_;
   }
 
-  CpuPortStats getCpuPortStats() const override;
+  CpuPortStats getCpuPortStats(bool getIncrement) const override;
 
   std::map<PortID, FabricEndpoint> getFabricConnectivity() const override;
 

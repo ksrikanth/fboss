@@ -378,7 +378,7 @@ void getPortInfoHelper(
   }
   try {
     portInfo.transceiverIdx() = sw.getTransceiverIdxThrift(port->getID());
-  } catch (const facebook::fboss::FbossError& err) {
+  } catch (const facebook::fboss::FbossError&) {
     // No problem, we just don't set the other info
   }
 
@@ -1543,7 +1543,7 @@ void ThriftHandler::getPortPrbsStats(
   ensureConfigured(__func__);
 
   if (component == phy::PortComponent::ASIC) {
-    auto asicPrbsStats = sw_->getPortAsicPrbsStats(portId);
+    auto asicPrbsStats = sw_->getPortAsicPrbsStats(PortID(portId));
     prbsStats.portId() = portId;
     prbsStats.component() = phy::PortComponent::ASIC;
     for (const auto& lane : asicPrbsStats) {
@@ -2890,6 +2890,19 @@ void ThriftHandler::publishLinkSnapshots(
   }
 }
 
+void ThriftHandler::getAllInterfacePhyInfo(
+    std::map<std::string, phy::PhyInfo>& phyInfos) {
+  auto log = LOG_THRIFT_CALL(DBG1);
+  auto portNames = std::make_unique<std::vector<std::string>>();
+  std::shared_ptr<SwitchState> swState = sw_->getState();
+
+  for (const auto& port :
+       std::as_const(*(swState->getPorts()->getAllNodes()))) {
+    portNames->push_back(port.second->getName());
+  }
+  getInterfacePhyInfo(phyInfos, std::move(portNames));
+}
+
 void ThriftHandler::getInterfacePhyInfo(
     std::map<std::string, phy::PhyInfo>& phyInfos,
     std::unique_ptr<std::vector<std::string>> portNames) {
@@ -3146,7 +3159,7 @@ void ThriftHandler::getSysPortStats(
 void ThriftHandler::getCpuPortStats(CpuPortStats& cpuPortStats) {
   auto log = LOG_THRIFT_CALL(DBG1);
   ensureConfigured(__func__);
-  cpuPortStats = sw_->getHwSwitchHandler()->getCpuPortStats();
+  cpuPortStats = sw_->getHwSwitchHandler()->getCpuPortStats(true);
 }
 
 void ThriftHandler::getHwPortStats(

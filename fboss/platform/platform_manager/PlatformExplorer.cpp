@@ -17,9 +17,8 @@
 
 namespace {
 constexpr auto kRootSlotPath = "/";
-constexpr auto kIdprom = "IDPROM";
-const re2::RE2 kValidHwmonDirName{"hwmon[0-9]+"};
 const re2::RE2 kGpioChipNameRe{"gpiochip\\d+"};
+const re2::RE2 kIioDeviceRe{"iio:device\\d+"};
 const std::string kGpioChip = "gpiochip";
 
 std::string getSlotPath(
@@ -422,159 +421,53 @@ void PlatformExplorer::createDeviceSymLink(
     XLOG(ERR) << fmt::format("No PmUnit exists at {}", slotPath);
     return;
   }
-  auto pmUnitName = dataStore_.getPmUnitName(slotPath);
-  auto pmUnitConfig = platformConfig_.pmUnitConfigs()->at(pmUnitName);
-
-  auto idpromConfig = platformConfig_.slotTypeConfigs()
-                          ->at(*pmUnitConfig.pluggedInSlotType())
-                          .idpromConfig();
-  auto i2cDeviceConfig = std::find_if(
-      pmUnitConfig.i2cDeviceConfigs()->begin(),
-      pmUnitConfig.i2cDeviceConfigs()->end(),
-      [deviceNameCopy = deviceName](auto i2cDeviceConfig) {
-        return *i2cDeviceConfig.pmUnitScopedName() == deviceNameCopy;
-      });
-  auto pciDeviceConfig = std::find_if(
-      pmUnitConfig.pciDeviceConfigs()->begin(),
-      pmUnitConfig.pciDeviceConfigs()->end(),
-      [deviceNameCopy = deviceName](auto pciDeviceConfig) {
-        return *pciDeviceConfig.pmUnitScopedName() == deviceNameCopy;
-      });
 
   std::optional<std::filesystem::path> targetPath = std::nullopt;
-  if (linkParentPath.string() == "/run/devmap/eeproms") {
-    if (deviceName == kIdprom) {
-      CHECK(idpromConfig);
-      targetPath = std::filesystem::path(i2cExplorer_.getDeviceI2cPath(
-          dataStore_.getI2cBusNum(slotPath, *idpromConfig->busName()),
-          I2cAddr(*idpromConfig->address())));
-    } else {
-      if (i2cDeviceConfig == pmUnitConfig.i2cDeviceConfigs()->end()) {
-        XLOG(ERR) << fmt::format(
-            "Couldn't find i2c device config for ({})", deviceName);
+  try {
+    if (linkParentPath.string() == "/run/devmap/eeproms") {
+      targetPath = devicePathResolver_.resolveEepromPath(devicePath);
+    } else if (linkParentPath.string() == "/run/devmap/sensors") {
+      targetPath = devicePathResolver_.resolveSensorPath(devicePath);
+    } else if (linkParentPath.string() == "/run/devmap/cplds") {
+      if (auto i2cDevicePath =
+              devicePathResolver_.tryResolveI2cDevicePath(devicePath)) {
+        targetPath = *i2cDevicePath;
+      } else {
+        targetPath = devicePathResolver_.resolvePciDevicePath(devicePath);
       }
-      auto busNum =
-          dataStore_.getI2cBusNum(slotPath, *i2cDeviceConfig->busName());
-      auto i2cAddr = I2cAddr(*i2cDeviceConfig->address());
-      if (!i2cExplorer_.isI2cDevicePresent(busNum, i2cAddr)) {
+    } else if (linkParentPath.string() == "/run/devmap/fpgas") {
+      targetPath = devicePathResolver_.resolvePciDevicePath(devicePath);
+    } else if (linkParentPath.string() == "/run/devmap/i2c-busses") {
+      targetPath = devicePathResolver_.resolveI2cBusPath(devicePath);
+    } else if (linkParentPath.string() == "/run/devmap/gpiochips") {
+      targetPath = std::filesystem::path(fmt::format(
+          "/dev/gpiochip{}", dataStore_.getGpioChipNum(slotPath, deviceName)));
+    } else if (linkParentPath.string() == "/run/devmap/xcvrs") {
+      auto pciDevPath = dataStore_.getSysfsPath(devicePath);
+      auto expectedEnding =
+          fmt::format(".xcvr_ctrl.{}", dataStore_.getInstanceId(devicePath));
+      for (const auto& dirEntry :
+           std::filesystem::directory_iterator(pciDevPath)) {
+        if (hasEnding(dirEntry.path().string(), expectedEnding)) {
+          targetPath = dirEntry.path().string();
+        }
+      }
+      if (!targetPath) {
         XLOG(ERR) << fmt::format(
-            "{} is not plugged-in to the platform", deviceName);
+            "Couldn't find xcvr_ctrl directory under {}. DevicePath: {}",
+            pciDevPath,
+            devicePath);
         return;
       }
-      targetPath =
-          std::filesystem::path(i2cExplorer_.getDeviceI2cPath(busNum, i2cAddr));
-    }
-    targetPath = *targetPath / "eeprom";
-  } else if (linkParentPath.string() == "/run/devmap/sensors") {
-    if (i2cDeviceConfig == pmUnitConfig.i2cDeviceConfigs()->end()) {
-      XLOG(ERR) << fmt::format(
-          "Couldn't find i2c device config for ({})", deviceName);
-    }
-    auto busNum =
-        dataStore_.getI2cBusNum(slotPath, *i2cDeviceConfig->busName());
-    auto i2cAddr = I2cAddr(*i2cDeviceConfig->address());
-    if (!i2cExplorer_.isI2cDevicePresent(busNum, i2cAddr)) {
-      XLOG(ERR) << fmt::format(
-          "{} is not plugged-in to the platform", deviceName);
-      return;
-    }
-    targetPath =
-        std::filesystem::path(i2cExplorer_.getDeviceI2cPath(busNum, i2cAddr)) /
-        "hwmon";
-    if (!std::filesystem::exists(*targetPath)) {
-      XLOG(ERR) << fmt::format(
-          "{} doesn't have a valid hwmon directory ({})",
-          devicePath,
-          targetPath->string());
-      return;
-    }
-    std::string hwmonSubDir = "";
-    for (const auto& dirEntry :
-         std::filesystem::directory_iterator(*targetPath)) {
-      auto dirName = dirEntry.path().filename();
-      if (re2::RE2::FullMatch(dirName.string(), kValidHwmonDirName)) {
-        hwmonSubDir = dirName.string();
-        break;
-      }
-    }
-    if (hwmonSubDir.empty()) {
-      XLOG(ERR) << fmt::format(
-          "Couldn't find hwmon[num] folder within ({})", targetPath->string());
-      return;
-    }
-    targetPath = *targetPath / hwmonSubDir;
-  } else if (linkParentPath.string() == "/run/devmap/cplds") {
-    if (i2cDeviceConfig != pmUnitConfig.i2cDeviceConfigs()->end()) {
-      auto busNum =
-          dataStore_.getI2cBusNum(slotPath, *i2cDeviceConfig->busName());
-      auto i2cAddr = I2cAddr(*i2cDeviceConfig->address());
-      if (!i2cExplorer_.isI2cDevicePresent(busNum, i2cAddr)) {
-        XLOG(ERR) << fmt::format(
-            "{} is not plugged-in to the platform", deviceName);
-        return;
-      }
-      targetPath =
-          std::filesystem::path(i2cExplorer_.getDeviceI2cPath(busNum, i2cAddr));
-    } else if (pciDeviceConfig != pmUnitConfig.pciDeviceConfigs()->end()) {
-      auto pciDevice = PciDevice(
-          *pciDeviceConfig->pmUnitScopedName(),
-          *pciDeviceConfig->vendorId(),
-          *pciDeviceConfig->deviceId(),
-          *pciDeviceConfig->subSystemVendorId(),
-          *pciDeviceConfig->subSystemDeviceId());
-      targetPath = std::filesystem::path(pciDevice.sysfsPath());
+    } else if (linkParentPath.string() == "/run/devmap/flashes") {
+      targetPath = dataStore_.getCharDevPath(devicePath);
     } else {
-      XLOG(ERR) << fmt::format(
-          "Couldn't resolve target path for ({})", deviceName);
+      XLOG(ERR) << fmt::format("Symbolic link {} is not supported.", linkPath);
       return;
     }
-  } else if (linkParentPath.string() == "/run/devmap/fpgas") {
-    // Check if sysfs path is stored in DataStore (e.g info-rom)
-    // Otherwise, try to construct PciDevice sysfs path via config.
-    // TODO: rely on dataStore_ as part of efforts in D52785459
-    if (dataStore_.hasSysfsPath(devicePath)) {
-      targetPath = dataStore_.getSysfsPath(devicePath);
-    } else {
-      if (pciDeviceConfig == pmUnitConfig.pciDeviceConfigs()->end()) {
-        XLOG(ERR) << fmt::format(
-            "Couldn't find PCI device config for ({})", deviceName);
-        return;
-      }
-      auto pciDevice = PciDevice(
-          *pciDeviceConfig->pmUnitScopedName(),
-          *pciDeviceConfig->vendorId(),
-          *pciDeviceConfig->deviceId(),
-          *pciDeviceConfig->subSystemVendorId(),
-          *pciDeviceConfig->subSystemDeviceId());
-      targetPath = std::filesystem::path(pciDevice.sysfsPath());
-    }
-  } else if (linkParentPath.string() == "/run/devmap/i2c-busses") {
-    targetPath = std::filesystem::path(fmt::format(
-        "/dev/i2c-{}", dataStore_.getI2cBusNum(slotPath, deviceName)));
-  } else if (linkParentPath.string() == "/run/devmap/gpiochips") {
-    targetPath = std::filesystem::path(fmt::format(
-        "/dev/gpiochip{}", dataStore_.getGpioChipNum(slotPath, deviceName)));
-  } else if (linkParentPath.string() == "/run/devmap/xcvrs") {
-    auto pciDevPath = dataStore_.getSysfsPath(devicePath);
-    auto expectedEnding =
-        fmt::format(".xcvr_ctrl.{}", dataStore_.getInstanceId(devicePath));
-    for (const auto& dirEntry :
-         std::filesystem::directory_iterator(pciDevPath)) {
-      if (hasEnding(dirEntry.path().string(), expectedEnding)) {
-        targetPath = dirEntry.path().string();
-      }
-    }
-    if (!targetPath) {
-      XLOG(ERR) << fmt::format(
-          "Couldn't find xcvr_ctrl directory under {}. DevicePath: {}",
-          pciDevPath,
-          devicePath);
-      return;
-    }
-  } else if (linkParentPath.string() == "/run/devmap/flashes") {
-    targetPath = dataStore_.getCharDevPath(devicePath);
-  } else {
-    XLOG(ERR) << fmt::format("Symbolic link {} is not supported.", linkPath);
+  } catch (const std::exception& ex) {
+    XLOG(ERR) << fmt::format(
+        "Failed to resolve DevicePath {}. Reason: {}", devicePath, ex.what());
     return;
   }
 

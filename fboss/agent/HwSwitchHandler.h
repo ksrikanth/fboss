@@ -95,7 +95,7 @@ class HwSwitchHandler {
 
   virtual folly::F14FastMap<std::string, HwPortStats> getPortStats() const = 0;
 
-  virtual CpuPortStats getCpuPortStats() const = 0;
+  virtual CpuPortStats getCpuPortStats(bool getIncrement) const = 0;
 
   virtual std::map<std::string, HwSysPortStats> getSysPortStats() const = 0;
 
@@ -113,7 +113,7 @@ class HwSwitchHandler {
       const std::unique_ptr<std::vector<int32_t>>& ports) = 0;
 
   virtual std::vector<phy::PrbsLaneStats> getPortAsicPrbsStats(
-      int32_t portId) = 0;
+      PortID portId) = 0;
 
   virtual void clearPortAsicPrbsStats(int32_t portId) = 0;
 

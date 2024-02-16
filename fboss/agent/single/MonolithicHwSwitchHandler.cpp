@@ -139,7 +139,7 @@ void MonolithicHwSwitchHandler::clearPortStats(
 }
 
 std::vector<phy::PrbsLaneStats> MonolithicHwSwitchHandler::getPortAsicPrbsStats(
-    int32_t portId) {
+    PortID portId) {
   return hw_->getPortAsicPrbsStats(portId);
 }
 
@@ -172,8 +172,9 @@ std::shared_ptr<SwitchState> MonolithicHwSwitchHandler::stateChanged(
                      : hw_->stateChanged(delta);
 }
 
-CpuPortStats MonolithicHwSwitchHandler::getCpuPortStats() const {
-  return hw_->getCpuPortStats();
+CpuPortStats MonolithicHwSwitchHandler::getCpuPortStats(
+    bool getIncrement) const {
+  return hw_->getCpuPortStats(getIncrement);
 }
 
 std::map<PortID, FabricEndpoint>
@@ -233,9 +234,8 @@ multiswitch::StateOperDelta MonolithicHwSwitchHandler::getNextStateOperDelta(
   throw FbossError("Not supported");
 }
 
-void MonolithicHwSwitchHandler::notifyHwSwitchDisconnected() {
-  throw FbossError("Not supported");
-}
+// no action to take for monolithic
+void MonolithicHwSwitchHandler::notifyHwSwitchDisconnected() {}
 
 SwitchRunState MonolithicHwSwitchHandler::getHwSwitchRunState() {
   return hw_->getRunState();

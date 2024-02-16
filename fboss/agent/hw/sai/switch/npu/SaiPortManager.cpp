@@ -15,6 +15,14 @@
 #include "fboss/agent/hw/switch_asics/HwAsic.h"
 #include "fboss/agent/platforms/sai/SaiPlatform.h"
 
+#if defined(BRCM_SAI_SDK_DNX)
+#ifndef IS_OSS_BRCM_SAI
+#include <experimental/saiportextensions.h>
+#else
+#include <saiportextensions.h>
+#endif
+#endif
+
 DEFINE_bool(
     sai_use_interface_type_for_medium,
     false,
@@ -38,8 +46,11 @@ std::optional<SaiPortTraits::Attributes::SystemPortId> getSystemPortId(
 #if defined(BRCM_SAI_SDK_DNX)
 sai_int32_t getPortTypeFromCfg(const cfg::PortType& cfgPortType) {
   switch (cfgPortType) {
-    case cfg::PortType::INTERFACE_PORT:
     case cfg::PortType::MANAGEMENT_PORT:
+#if defined(SAI_VERSION_11_0_EA_DNX_ODP)
+      return SAI_PORT_TYPE_MGMT;
+#endif
+    case cfg::PortType::INTERFACE_PORT:
       return SAI_PORT_TYPE_LOGICAL;
     case cfg::PortType::FABRIC_PORT:
       return SAI_PORT_TYPE_FABRIC;
@@ -126,6 +137,11 @@ void SaiPortManager::fillInSupportedStats(PortID port) {
             HwAsic::Feature::ANY_ACL_DROP_COUNTER)) {
       counterIds.emplace_back(
           managerTable_->debugCounterManager().getAclDropCounterStatId());
+    }
+    if (platform_->getAsic()->isSupported(
+            HwAsic::Feature::EGRESS_FORWARDING_DROP_COUNTER)) {
+      counterIds.emplace_back(
+          managerTable_->debugCounterManager().getEgressForwardingDropStatId());
     }
     if (platform_->getAsic()->isSupported(HwAsic::Feature::PFC)) {
       counterIds.reserve(
@@ -479,8 +495,10 @@ SaiPortTraits::CreateAttributes SaiPortManager::attributesFromSwPort(
 
   std::optional<bool> fdrEnable;
 #if defined(BRCM_SAI_SDK_GTE_10_0) && defined(BRCM_SAI_SDK_XGS)
-  fdrEnable = platform_->getAsic()->isSupported(
-      HwAsic::Feature::SAI_FEC_CODEWORDS_STATS);
+  if (swPort->getPortType() != cfg::PortType::MANAGEMENT_PORT && adminState) {
+    fdrEnable = platform_->getAsic()->isSupported(
+        HwAsic::Feature::SAI_FEC_CODEWORDS_STATS);
+  }
 #endif
   auto ptpStatusOpt = managerTable_->switchManager().getPtpTcEnabled();
   uint16_t vlanId = swPort->getIngressVlan();
@@ -491,6 +509,20 @@ SaiPortTraits::CreateAttributes SaiPortManager::attributesFromSwPort(
   if (swPort->getPortType() != cfg::PortType::FABRIC_PORT ||
       platform_->getAsic()->isSupported(HwAsic::Feature::FABRIC_PORT_MTU)) {
     mtu = swPort->getMaxFrameSize();
+  }
+  std::optional<SaiPortTraits::Attributes::PrbsPolynomial> prbsPolynomial =
+      std::nullopt;
+  std::optional<SaiPortTraits::Attributes::PrbsConfig> prbsConfig =
+      std::nullopt;
+  if (platform_->getAsic()->isSupported(HwAsic::Feature::SAI_PRBS)) {
+    auto asicPrbs = swPort->getAsicPrbs();
+    prbsConfig = getSaiPortPrbsConfig(asicPrbs.enabled().value());
+    if (asicPrbs.enabled().value()) {
+      prbsPolynomial =
+          static_cast<sai_uint32_t>(asicPrbs.polynominal().value());
+      XLOG(DBG2) << "ASIC PRBS enabled with polynomial set to "
+                 << asicPrbs.polynominal().value() << " for port " << portID;
+    }
   }
   auto portPfcInfo = getPortPfcAttributes(swPort);
   if (basicAttributeOnly) {
@@ -509,7 +541,7 @@ SaiPortTraits::CreateAttributes SaiPortManager::attributesFromSwPort(
           std::nullopt, std::nullopt, std::nullopt, std::nullopt, std::nullopt,
           std::nullopt, std::nullopt, std::nullopt, std::nullopt, std::nullopt,
           std::nullopt, std::nullopt, std::nullopt, std::nullopt, std::nullopt,
-          std::nullopt, std::nullopt,
+          std::nullopt, std::nullopt, std::nullopt, std::nullopt,
 #if !defined(TAJO_SDK)
           std::nullopt, std::nullopt,
 #endif
@@ -550,6 +582,8 @@ SaiPortTraits::CreateAttributes SaiPortManager::attributesFromSwPort(
         std::nullopt, // Egress Sample Packet
         std::nullopt, // Ingress mirror sample session
         std::nullopt, // Egress mirror sample session
+        prbsPolynomial, // PRBS Polynomial
+        prbsConfig, // PRBS Config
         std::nullopt, // Ingress MacSec ACL
         std::nullopt, // Egress MacSec ACL
         systemPortId, // System Port Id

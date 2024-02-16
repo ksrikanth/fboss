@@ -14,11 +14,11 @@
 #include "fboss/agent/hw/test/HwLinkStateDependentTest.h"
 #include "fboss/agent/hw/test/HwTestPacketUtils.h"
 #include "fboss/agent/hw/test/dataplane_tests/HwTestDscpMarkingUtils.h"
-#include "fboss/agent/hw/test/dataplane_tests/HwTestOlympicUtils.h"
 #include "fboss/agent/hw/test/dataplane_tests/HwTestQosUtils.h"
 #include "fboss/agent/hw/test/dataplane_tests/HwTestQueuePerHostUtils.h"
 #include "fboss/agent/test/EcmpSetupHelper.h"
 #include "fboss/agent/test/ResourceLibUtil.h"
+#include "fboss/agent/test/utils/OlympicTestUtils.h"
 
 #include "fboss/agent/hw/test/HwTestAclUtils.h"
 #include "fboss/agent/packet/IPProto.h"
@@ -409,7 +409,10 @@ class SaiAclTableGroupTrafficTest : public HwLinkStateDependentTest {
         auto newCfg{initialConfig()};
         utility::addQueuePerHostQueueConfig(&newCfg);
         utility::addQueuePerHostAclTables(
-            &newCfg, 1 /*priority*/, addAllQualifiers);
+            &newCfg,
+            1 /*priority*/,
+            addAllQualifiers,
+            this->getHwSwitchEnsemble()->isSai());
         utility::addTtlAclTable(&newCfg, 2 /*priority*/);
         applyNewConfig(newCfg);
       }
@@ -570,7 +573,11 @@ class SaiAclTableGroupTrafficTest : public HwLinkStateDependentTest {
         auto newCfg{initialConfig()};
         utility::addOlympicQosMaps(newCfg, getAsic());
         utility::addDscpAclTable(
-            &newCfg, 1 /*priority*/, addAllQualifiers, getAsic());
+            &newCfg,
+            1 /*priority*/,
+            addAllQualifiers,
+            getAsic(),
+            this->getHwSwitchEnsemble()->isSai());
         utility::addTtlAclTable(&newCfg, 2);
         applyNewConfig(newCfg);
       }

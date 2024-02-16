@@ -56,6 +56,9 @@
           "test_name_regex": "SaiAclTableGroupTest.AddAclEntriesAndQualifiersToAclTablesPostWarmboot"
         },
         {
+          "test_name_regex": "SaiPortAdminStateTest.assertAdminState"
+        },
+        {
           "test_name_regex": "HwAclQualifierTest/[01].*Ip4*"
         },
         {
@@ -265,12 +268,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -329,18 +326,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -633,12 +618,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -697,18 +676,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -1035,6 +1002,9 @@
           "test_name_regex": "HwIngressBufferTest.validatePGQueueChanges"
         },
         {
+          "test_name_regex": "SaiPortAdminStateTest.assertAdminState"
+        },
+        {
           "test_name_regex": "HwDscpQueueMappingTest.VerifyAclAndQosMap"
         },
         {
@@ -1229,12 +1199,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -1293,18 +1257,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -1591,6 +1543,9 @@
           "test_name_regex": "SaiAclTableGroupTest.AddAclEntriesAndQualifiersToAclTablesPostWarmboot"
         },
         {
+          "test_name_regex": "SaiPortAdminStateTest.assertAdminState"
+        },
+        {
           "test_name_regex": "HwAclQualifierTest/[01].*Ip4*"
         },
         {
@@ -1845,7 +1800,7 @@
           "test_name_regex": "HwVoqSwitchWithFabricPortsTest.verifyNifMulticastTrafficDropped"
         },
         {
-          "test_name_regex": "HwVoqSwitchTest.fdrCellDrops"
+          "test_name_regex": "SaiPortAdminStateTest.assertAdminState"
         }
     ],
     "brcm/11.0_ea_dnx_odp/11.0_ea_dnx_odp/jericho3/simulator": [
@@ -1875,6 +1830,9 @@
         },
         {
           "test_name_regex": "HwHashConsistencyTest.UdpEgressLinksOnEcmpExpand"
+        },
+        {
+          "test_name_regex": "SaiPortAdminStateTest.assertAdminState"
         },
         {
           "test_name_regex": "HwEcmpTest.Ucmp.*"
@@ -2048,9 +2006,6 @@
           "test_name_regex": "HwHashTrunk.*"
         },
         {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwRouteCounterOverflowTest.*"
         },
         {
@@ -2081,9 +2036,6 @@
           "test_name_regex": "HwPtpTcTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
           "test_name_regex": "HwTrunkTest.*"
         },
         {
@@ -2111,13 +2063,7 @@
           "test_name_regex": "HwLoadBalancerNegativeProtocolMatchTestV6RoCE.*"
         },
         {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
           "test_name_regex": "HwDiagShellStressTest.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
         },
         {
           "test_name_regex": "HwOverflowTest.*"
@@ -2127,6 +2073,9 @@
         },
         {
           "test_name_regex": "HwCoppQueueStuckTest.*"
+        },
+        {
+          "test_name_regex": "HwCoppAclTest.*"
         },
         {
           "test_name_regex": "HwCoppTest/1.*"
@@ -2181,12 +2130,6 @@
         },
         {
           "test_name_regex": "HwConfigVerifyQosTest.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "HwVoqSwitchInterruptTest.*"
@@ -2623,12 +2566,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -2687,18 +2624,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -2803,9 +2728,6 @@
           "test_name_regex": "HwUdfAcl.*"
         },
         {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
           "test_name_regex": "HwPortLedTest.TestLedFromSwitchState"
         },
         {
@@ -2828,9 +2750,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
         },
         {
           "test_name_regex": "HwTrunkTest.TrunkPortStatsWithMplsPush"
@@ -2994,12 +2913,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -3060,18 +2973,6 @@
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
         },
         {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
-        },
-        {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
         },
         {
@@ -3094,9 +2995,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
         },
         {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.warm_boot_for_warm_boot.0.HwEmptyTest.CheckInit.SaiAclTableGroupTest.AddTablesThenEntries"
@@ -3737,12 +3635,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -3801,18 +3693,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -3917,9 +3797,6 @@
           "test_name_regex": "HwUdfAcl.*"
         },
         {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
           "test_name_regex": "HwPortLedTest.TestLedFromSwitchState"
         },
         {
@@ -3942,9 +3819,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
         },
         {
           "test_name_regex": "HwTrunkTest.TrunkPortStatsWithMplsPush"
@@ -4141,12 +4015,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -4207,18 +4075,6 @@
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
         },
         {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
-        },
-        {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
         },
         {
@@ -4241,9 +4097,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
         },
         {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.warm_boot_for_warm_boot.0.HwEmptyTest.CheckInit.SaiAclTableGroupTest.AddTablesThenEntries"
@@ -4941,12 +4794,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -5005,18 +4852,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -5121,9 +4956,6 @@
           "test_name_regex": "HwUdfAcl.*"
         },
         {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
           "test_name_regex": "HwPortLedTest.TestLedFromSwitchState"
         },
         {
@@ -5146,9 +4978,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
         },
         {
           "test_name_regex": "HwTrunkTest.TrunkPortStatsWithMplsPush"
@@ -5321,12 +5150,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -5387,18 +5210,6 @@
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
         },
         {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
-        },
-        {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
         },
         {
@@ -5421,9 +5232,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
         },
         {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.warm_boot_for_warm_boot.0.HwEmptyTest.CheckInit.SaiAclTableGroupTest.AddTablesThenEntries"
@@ -5932,12 +5740,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -5996,18 +5798,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -6332,6 +6122,9 @@
         },
         {
           "test_name_regex": "HwIngressBufferTest.validatePGQueueChanges"
+        },
+        {
+          "test_name_regex": "SaiPortAdminStateTest.assertAdminState"
         }
     ],
     "brcm/8.2.0.0_odp/9.2.0.0_odp/tomahawk": [
@@ -6627,12 +6420,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -6691,18 +6478,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -6807,9 +6582,6 @@
           "test_name_regex": "HwUdfAcl.*"
         },
         {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
           "test_name_regex": "HwPortLedTest.TestLedFromSwitchState"
         },
         {
@@ -6832,9 +6604,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
         },
         {
           "test_name_regex": "HwTrunkTest.TrunkPortStatsWithMplsPush"
@@ -7031,12 +6800,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -7097,18 +6860,6 @@
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
         },
         {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
-        },
-        {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
         },
         {
@@ -7131,9 +6882,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
         },
         {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.warm_boot_for_warm_boot.0.HwEmptyTest.CheckInit.SaiAclTableGroupTest.AddTablesThenEntries"
@@ -7666,12 +7414,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -7730,18 +7472,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -8066,6 +7796,9 @@
         },
         {
           "test_name_regex": "HwIngressBufferTest.validatePGQueueChanges"
+        },
+        {
+          "test_name_regex": "SaiPortAdminStateTest.assertAdminState"
         },
         {
           "test_name_regex": "HwTrafficPfcTest.*"
@@ -8220,12 +7953,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -8284,18 +8011,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -8620,6 +8335,9 @@
         },
         {
           "test_name_regex": "HwIngressBufferTest.validatePGQueueChanges"
+        },
+        {
+          "test_name_regex": "SaiPortAdminStateTest.assertAdminState"
         },
         {
           "test_name_regex": "HwDscpQueueMappingTest.VerifyAclAndQosMap"
@@ -8981,12 +8699,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -9045,18 +8757,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -9161,9 +8861,6 @@
           "test_name_regex": "HwUdfAcl.*"
         },
         {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
           "test_name_regex": "HwPortLedTest.TestLedFromSwitchState"
         },
         {
@@ -9186,9 +8883,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
         },
         {
           "test_name_regex": "HwTrunkTest.TrunkPortStatsWithMplsPush"
@@ -9361,12 +9055,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -9427,18 +9115,6 @@
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
         },
         {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
-        },
-        {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
         },
         {
@@ -9461,9 +9137,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
         },
         {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.warm_boot_for_warm_boot.0.HwEmptyTest.CheckInit.SaiAclTableGroupTest.AddTablesThenEntries"
@@ -9975,12 +9648,6 @@
           "test_name_regex": "HwPacketFloodTest.*"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
           "test_name_regex": "HwCoppQosTest.*"
         },
         {
@@ -10039,18 +9706,6 @@
         },
         {
           "test_name_regex": "HwLoadBalancerTestV6RoCE.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "roundtrip..*.HwEmptyTest.CheckInit.HwCoppTest/0.*"
@@ -10375,6 +10030,9 @@
         },
         {
           "test_name_regex": "HwIngressBufferTest.validatePGQueueChanges"
+        },
+        {
+          "test_name_regex": "SaiPortAdminStateTest.assertAdminState"
         }
     ],
     "leaba/1.42.8/1.42.8/gibraltar": [
@@ -10509,12 +10167,6 @@
         },
         {
           "test_name_regex": "HwCoppQosTest.*$"
-        },
-        {
-          "test_name_regex": "HwTeFlowTest.*$"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*$"
         },
         {
           "test_name_regex": "HwDataPlaneMirrorTest/[01].SpanAclMirror$"
@@ -10670,9 +10322,6 @@
           "test_name_regex": "HwAclCounterTest/[01].*Sport.*$"
         },
         {
-          "test_name_regex": "HwFlowletSwitching.*$"
-        },
-        {
           "test_name_regex": "HwVoqSwitchWithFabricPortsTest.fabricIsolate$"
         },
         {
@@ -10682,19 +10331,10 @@
           "test_name_regex": "HwUdfAcl.*$"
         },
         {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
-        },
-        {
           "test_name_regex": "SaiRouteRollbackTest.*WithTrunk.*$"
         },
         {
           "test_name_regex": "HwPortLedTest.TestLedFromSwitchState$"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*$"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
         },
         {
           "test_name_regex": "HwMacLearningAndNeighborResolutionTest/[0-7].flapMacAndNeighbors$"
@@ -10873,12 +10513,6 @@
           "test_name_regex": "HwCoppQosTest.*$"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*$"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*$"
-        },
-        {
           "test_name_regex": "HwDataPlaneMirrorTest/[01].SpanAclMirror$"
         },
         {
@@ -11032,9 +10666,6 @@
           "test_name_regex": "HwAclCounterTest/[01].*Sport.*$"
         },
         {
-          "test_name_regex": "HwFlowletSwitching.*$"
-        },
-        {
           "test_name_regex": "HwVoqSwitchWithFabricPortsTest.fabricIsolate$"
         },
         {
@@ -11044,19 +10675,10 @@
           "test_name_regex": "HwUdfAcl.*$"
         },
         {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
-        },
-        {
           "test_name_regex": "SaiRouteRollbackTest.*WithTrunk.*$"
         },
         {
           "test_name_regex": "HwPortLedTest.TestLedFromSwitchState$"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*$"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
         },
         {
           "test_name_regex": "HwMacLearningAndNeighborResolutionTest/[0-7].flapMacAndNeighbors$"
@@ -11159,12 +10781,6 @@
         },
         {
           "test_name_regex": "HwSflowTest.*$"
-        },
-        {
-          "test_name_regex": "HwTeFlowTest.*$"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*$"
         },
         {
           "test_name_regex": "HwDscpQueueMappingTest.*$"
@@ -11371,19 +10987,7 @@
           "test_name_regex": "SaiRouteRollbackTest.*$"
         },
         {
-          "test_name_regex": "HwFlowletSwitching.*$"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
-        },
-        {
           "test_name_regex": "HwRouteTest/[01].verifyCpuRouteChange$"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*$"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
         },
         {
           "test_name_regex": "HwAclCounterTest/1.*$"
@@ -11541,12 +11145,6 @@
           "test_name_regex": "HwCoppQosTest.*$"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*$"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*$"
-        },
-        {
           "test_name_regex": "HwDataPlaneMirrorTest/[01].SpanAclMirror$"
         },
         {
@@ -11700,9 +11298,6 @@
           "test_name_regex": "HwAclCounterTest/[01].*Sport.*$"
         },
         {
-          "test_name_regex": "HwFlowletSwitching.*$"
-        },
-        {
           "test_name_regex": "HwVoqSwitchWithFabricPortsTest.fabricIsolate$"
         },
         {
@@ -11712,19 +11307,10 @@
           "test_name_regex": "HwUdfAcl.*$"
         },
         {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
-        },
-        {
           "test_name_regex": "SaiRouteRollbackTest.*WithTrunk.*$"
         },
         {
           "test_name_regex": "HwPortLedTest.TestLedFromSwitchState$"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*$"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
         },
         {
           "test_name_regex": "HwMacLearningAndNeighborResolutionTest/[0-7].flapMacAndNeighbors$"
@@ -11921,12 +11507,6 @@
           "test_name_regex": "HwCoppQosTest.*$"
         },
         {
-          "test_name_regex": "HwTeFlowTest.*$"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*$"
-        },
-        {
           "test_name_regex": "HwDataPlaneMirrorTest/[01].SpanAclMirror$"
         },
         {
@@ -12080,9 +11660,6 @@
           "test_name_regex": "HwAclCounterTest/[01].*Sport.*$"
         },
         {
-          "test_name_regex": "HwFlowletSwitching.*$"
-        },
-        {
           "test_name_regex": "HwVoqSwitchWithFabricPortsTest.fabricIsolate$"
         },
         {
@@ -12092,19 +11669,10 @@
           "test_name_regex": "HwUdfAcl.*$"
         },
         {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
-        },
-        {
           "test_name_regex": "SaiRouteRollbackTest.*WithTrunk.*$"
         },
         {
           "test_name_regex": "HwPortLedTest.TestLedFromSwitchState$"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*$"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
         },
         {
           "test_name_regex": "HwMacLearningAndNeighborResolutionTest/[0-7].flapMacAndNeighbors$"
@@ -12207,12 +11775,6 @@
         },
         {
           "test_name_regex": "HwSflowTest.*$"
-        },
-        {
-          "test_name_regex": "HwTeFlowTest.*$"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*$"
         },
         {
           "test_name_regex": "HwDscpQueueMappingTest.*$"
@@ -12419,19 +11981,7 @@
           "test_name_regex": "SaiRouteRollbackTest.*$"
         },
         {
-          "test_name_regex": "HwFlowletSwitching.*$"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
-        },
-        {
           "test_name_regex": "HwRouteTest/[01].verifyCpuRouteChange$"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*$"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
         },
         {
           "test_name_regex": "HwAclCounterTest/1.*$"

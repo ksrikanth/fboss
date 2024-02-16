@@ -22,12 +22,13 @@
 #include "fboss/agent/hw/test/HwTestStatUtils.h"
 #include "fboss/agent/hw/test/HwVoqUtils.h"
 #include "fboss/agent/hw/test/LoadBalancerUtils.h"
-#include "fboss/agent/hw/test/dataplane_tests/HwTestOlympicUtils.h"
 #include "fboss/agent/hw/test/dataplane_tests/HwTestQueuePerHostUtils.h"
 #include "fboss/agent/state/Interface.h"
 #include "fboss/agent/state/InterfaceMap.h"
 #include "fboss/agent/state/SwitchState.h"
 #include "fboss/agent/test/EcmpSetupHelper.h"
+#include "fboss/agent/test/utils/FabricTestUtils.h"
+#include "fboss/agent/test/utils/OlympicTestUtils.h"
 #include "fboss/lib/CommonUtils.h"
 
 namespace {
@@ -57,7 +58,8 @@ class HwVoqSwitchTest : public HwLinkStateDependentTest {
       if (getAsic()->getDefaultNumPortQueues(
               cpuStreamType, cfg::PortType::CPU_PORT)) {
         // cpu queues supported
-        utility::setDefaultCpuTrafficPolicyConfig(cfg, getAsic());
+        utility::setDefaultCpuTrafficPolicyConfig(
+            cfg, getAsic(), getHwSwitchEnsemble()->isSai());
         utility::addCpuQueueConfig(
             cfg, getAsic(), getHwSwitchEnsemble()->isSai());
         break;
@@ -334,8 +336,31 @@ class HwVoqSwitchWithFabricPortsTest : public HwVoqSwitchTest {
         utility::kBaseVlanId,
         true /*enable fabric ports*/
     );
-    populatePortExpectedNeighbors(masterLogicalPortIds(), cfg);
+    utility::populatePortExpectedNeighbors(masterLogicalPortIds(), cfg);
     return cfg;
+  }
+
+  void addDropAclForMcastIp() {
+    auto newCfg = initialConfig();
+    // Add ACL Table group before adding any ACLs
+    utility::addAclTableGroup(
+        &newCfg, cfg::AclStage::INGRESS, utility::getAclTableGroupName());
+    utility::addDefaultAclTable(newCfg);
+    auto aclName = "drop-v6-multicast";
+    auto aclCounterName = "drop-v6-multicast-stat";
+    // The expectation is that MC traffic received on NIF ports gets dropped
+    // and not get forwarded to fabric, as that will lead to fabric drops
+    // incrementing and would be a red flag. Dropping of MC traffic does not
+    // happen natively and hence need a drop ACL entry to match on IPv6 MC
+    // and drop the same.
+    auto* acl = utility::addAcl(&newCfg, aclName, cfg::AclActionType::DENY);
+    acl->dstIp() = "ff00::/8";
+    utility::addAclStat(
+        &newCfg,
+        aclName,
+        aclCounterName,
+        utility::getAclCounterTypes(getHwSwitch()));
+    applyNewConfig(newCfg);
   }
 
  private:
@@ -371,7 +396,9 @@ TEST_F(HwVoqSwitchWithFabricPortsTest, collectStats) {
 }
 
 TEST_F(HwVoqSwitchWithFabricPortsTest, checkFabricReachability) {
-  auto verify = [this]() { checkFabricReachability(getHwSwitchEnsemble()); };
+  auto verify = [this]() {
+    utility::checkFabricReachability(getHwSwitchEnsemble(), SwitchID(0));
+  };
   verifyAcrossWarmBoots([] {}, verify);
 }
 
@@ -383,14 +410,16 @@ TEST_F(HwVoqSwitchWithFabricPortsTest, fabricIsolate) {
     getHwSwitch()->updateStats();
     auto fabricPortId =
         PortID(masterLogicalPortIds({cfg::PortType::FABRIC_PORT})[0]);
-    checkPortFabricReachability(getHwSwitchEnsemble(), fabricPortId);
+    utility::checkPortFabricReachability(
+        getHwSwitchEnsemble(), SwitchID(0), fabricPortId);
     auto newState = getProgrammedState();
     auto port = newState->getPorts()->getNodeIf(fabricPortId);
     auto newPort = port->modify(&newState);
     newPort->setPortDrainState(cfg::PortDrainState::DRAINED);
     applyNewState(newState);
     getHwSwitch()->updateStats();
-    checkPortFabricReachability(getHwSwitchEnsemble(), fabricPortId);
+    utility::checkPortFabricReachability(
+        getHwSwitchEnsemble(), SwitchID(0), fabricPortId);
   };
   verifyAcrossWarmBoots(setup, verify);
 }
@@ -403,7 +432,9 @@ TEST_F(HwVoqSwitchWithFabricPortsTest, switchIsolate) {
     applyNewConfig(newCfg);
   };
 
-  auto verify = [=, this]() { checkFabricReachability(getHwSwitchEnsemble()); };
+  auto verify = [=, this]() {
+    utility::checkFabricReachability(getHwSwitchEnsemble(), SwitchID(0));
+  };
   verifyAcrossWarmBoots(setup, verify);
 }
 
@@ -502,7 +533,7 @@ TEST_F(HwVoqSwitchWithFabricPortsTest, checkFabricPortSpray) {
 
 TEST_F(HwVoqSwitchWithFabricPortsTest, verifyNifMulticastTrafficDropped) {
   constexpr static auto kNumPacketsToSend{1000};
-  auto setup = []() {};
+  auto setup = [this]() { addDropAclForMcastIp(); };
 
   auto verify = [this]() {
     auto beforePkts = getLatestPortStats(masterLogicalInterfacePortIds()[0])
@@ -814,12 +845,12 @@ TEST_F(HwVoqSwitchTest, AclQualifiersWithCounter) {
     ASSERT_TRUE(utility::isAclTableEnabled(getHwSwitch()));
     EXPECT_EQ(
         utility::getAclTableNumAclEntries(getHwSwitch()),
-        utility::getNumDefaultCpuAcls(getAsic()) + 1);
+        utility::getNumDefaultCpuAcls(getAsic(), true) + 1);
     utility::checkSwHwAclMatch(getHwSwitch(), getProgrammedState(), kAclName);
 
     utility::checkAclEntryAndStatCount(
         getHwSwitch(),
-        /*ACLs*/ utility::getNumDefaultCpuAcls(getAsic()) + 1,
+        /*ACLs*/ utility::getNumDefaultCpuAcls(getAsic(), true) + 1,
         /*stats*/ 1,
         /*counters*/ 2);
     utility::checkAclStat(

@@ -716,6 +716,8 @@ AgentStats SwSwitch::fillFsdbStats() {
       }
       agentStats.flowletStatsMap()->insert(
           {switchIdx, std::move(*hwSwitchStats.flowletStats())});
+      agentStats.cpuPortStatsMap()->insert(
+          {switchIdx, std::move(*hwSwitchStats.cpuPortStats())});
     }
     lockedStats->clear();
   }
@@ -787,6 +789,8 @@ void SwSwitch::updateStats() {
       hwStats.phyInfo()->emplace(portId, phyInfoPerPort);
     }
     hwStats.flowletStats() = getHwFlowletStats();
+    // TODO - fill cpu stats for mono.
+    // bcm switch does not support cpu stats collection
     updateHwSwitchStats(0 /*switchIndex*/, std::move(hwStats));
   }
   updateFlowletStats();
@@ -1436,9 +1440,9 @@ void SwSwitch::handlePendingUpdates() {
         << " Hw Failure protected updates should be non coalescing";
   }
 
-  // This function should never be called with valid updates while we are
-  // not initialized yet
-  DCHECK(isInitialized());
+  // This function should never be called with valid updates while we don't have
+  // a valid switch state
+  DCHECK(getState());
 
   // Call all of the update functions to prepare the new SwitchState
   auto oldAppliedState = getState();
@@ -2723,7 +2727,7 @@ void SwSwitch::clearPortStats(
   multiHwSwitchHandler_->clearPortStats(ports);
 }
 
-std::vector<phy::PrbsLaneStats> SwSwitch::getPortAsicPrbsStats(int32_t portId) {
+std::vector<phy::PrbsLaneStats> SwSwitch::getPortAsicPrbsStats(PortID portId) {
   return multiHwSwitchHandler_->getPortAsicPrbsStats(portId);
 }
 
@@ -3075,6 +3079,20 @@ FabricReachabilityStats SwSwitch::getFabricReachabilityStats() {
     return *fabricReachabilityStats_.rlock();
   } else {
     return getHwSwitchHandler()->getFabricReachabilityStats();
+  }
+}
+
+void SwSwitch::setPortsDownForSwitch(SwitchID switchId) {
+  for (const auto& [matcher, portMap] :
+       std::as_const(*getState()->getPorts())) {
+    // walk through all ports on the switch and set them down
+    if (HwSwitchMatcher(matcher).has(switchId)) {
+      for (const auto& port : std::as_const(*portMap)) {
+        if (port.second->isUp()) {
+          linkStateChanged(port.second->getID(), false);
+        }
+      }
+    }
   }
 }
 

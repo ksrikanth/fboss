@@ -53,7 +53,7 @@ class MultiHwSwitchHandler {
 
   void notifyHwSwitchGracefulExit(int64_t switchId);
 
-  void notifyHwSwitchDisconnected(int64_t switchId);
+  void notifyHwSwitchDisconnected(int64_t switchId, bool gracefulExit);
 
   std::shared_ptr<SwitchState> stateChanged(
       const StateDelta& delta,
@@ -90,7 +90,7 @@ class MultiHwSwitchHandler {
 
   folly::F14FastMap<std::string, HwPortStats> getPortStats();
 
-  CpuPortStats getCpuPortStats();
+  CpuPortStats getCpuPortStats(bool getIncrement);
 
   std::map<std::string, HwSysPortStats> getSysPortStats();
   HwSwitchDropStats getSwitchDropStats() const;
@@ -106,7 +106,7 @@ class MultiHwSwitchHandler {
 
   void clearPortStats(const std::unique_ptr<std::vector<int32_t>>& ports);
 
-  std::vector<phy::PrbsLaneStats> getPortAsicPrbsStats(int32_t portId);
+  std::vector<phy::PrbsLaneStats> getPortAsicPrbsStats(PortID portId);
 
   void clearPortAsicPrbsStats(int32_t portId);
 

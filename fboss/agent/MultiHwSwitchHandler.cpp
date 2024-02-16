@@ -260,10 +260,10 @@ MultiHwSwitchHandler::getPortStats() {
   return hwSwitchSyncers_.begin()->second->getPortStats();
 }
 
-CpuPortStats MultiHwSwitchHandler::getCpuPortStats() {
+CpuPortStats MultiHwSwitchHandler::getCpuPortStats(bool getIncrement) {
   // TODO - support with multiple switches
   CHECK_EQ(hwSwitchSyncers_.size(), 1);
-  return hwSwitchSyncers_.begin()->second->getCpuPortStats();
+  return hwSwitchSyncers_.begin()->second->getCpuPortStats(getIncrement);
 }
 
 std::map<std::string, HwSysPortStats> MultiHwSwitchHandler::getSysPortStats() {
@@ -310,7 +310,7 @@ void MultiHwSwitchHandler::clearPortStats(
 }
 
 std::vector<phy::PrbsLaneStats> MultiHwSwitchHandler::getPortAsicPrbsStats(
-    int32_t portId) {
+    PortID portId) {
   // TODO - support with multiple switches
   CHECK_EQ(hwSwitchSyncers_.size(), 1);
   return hwSwitchSyncers_.begin()->second->getPortAsicPrbsStats(portId);
@@ -475,20 +475,25 @@ multiswitch::StateOperDelta MultiHwSwitchHandler::getNextStateOperDelta(
 }
 
 void MultiHwSwitchHandler::notifyHwSwitchGracefulExit(int64_t switchId) {
-  notifyHwSwitchDisconnected(switchId);
+  notifyHwSwitchDisconnected(switchId, true);
 }
 
-void MultiHwSwitchHandler::notifyHwSwitchDisconnected(int64_t switchId) {
+void MultiHwSwitchHandler::notifyHwSwitchDisconnected(
+    int64_t switchId,
+    bool gracefulExit) {
   if (!isRunning()) {
     throw FbossError("multi hw switch syncer not started");
   }
   auto iter = hwSwitchSyncers_.find(SwitchID(switchId));
   CHECK(iter != hwSwitchSyncers_.end());
 
-  connectionStatusTable_.disconnected(SwitchID(switchId));
-
-  // cancel any pending long poll request
-  iter->second->notifyHwSwitchDisconnected();
+  if (connectionStatusTable_.disconnected(SwitchID(switchId))) {
+    // cancel any pending long poll request
+    iter->second->notifyHwSwitchDisconnected();
+    if (!gracefulExit) {
+      sw_->setPortsDownForSwitch(SwitchID(switchId));
+    }
+  }
 }
 
 bool MultiHwSwitchHandler::waitUntilHwSwitchConnected() {

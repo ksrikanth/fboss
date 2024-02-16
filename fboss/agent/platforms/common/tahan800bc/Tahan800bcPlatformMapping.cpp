@@ -17064,7 +17064,7 @@ constexpr auto kJsonPlatformMappingStr = R"(
           "portType": 4
         },
         "supportedProfiles": {
-          "22": {
+          "23": {
               "pins": {
                 "iphy": [
                   {
@@ -26866,7 +26866,7 @@ constexpr auto kJsonPlatformMappingStr = R"(
   "platformSupportedProfiles": [
     {
       "factor": {
-        "profileID": 22
+        "profileID": 23
       },
       "profile": {
         "speed": 100000,
@@ -26874,8 +26874,8 @@ constexpr auto kJsonPlatformMappingStr = R"(
           "numLanes": 4,
           "modulation": 1,
           "fec": 528,
-          "medium": 1,
-          "interfaceType": 41
+          "medium": 2,
+          "interfaceType": 21
         }
       }
     },
@@ -26890,7 +26890,7 @@ constexpr auto kJsonPlatformMappingStr = R"(
           "modulation": 2,
           "fec": 11,
           "medium": 2,
-          "interfaceType": 41
+          "interfaceType": 3
         }
       }
     },
@@ -26905,7 +26905,7 @@ constexpr auto kJsonPlatformMappingStr = R"(
           "modulation": 2,
           "fec": 11,
           "medium": 2,
-          "interfaceType": 41
+          "interfaceType": 4
         }
       }
     }

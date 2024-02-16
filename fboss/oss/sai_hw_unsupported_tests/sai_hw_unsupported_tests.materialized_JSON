@@ -2,6 +2,27 @@
   "unsupported_tests": {
     "brcm/10.0_ea_dnx_odp/10.0_ea_dnx_odp/jericho2": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "HwEcmpTest.Ucmp.*"
         },
         {
@@ -39,12 +60,6 @@
         },
         {
           "test_name_regex": "HwCoppTest/1.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTest.*"
         },
         {
           "test_name_regex": "HwRouteCounterOverflowTest.*"
@@ -167,21 +182,6 @@
           "test_name_regex": "HwUdfAcl.*"
         },
         {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
-        },
-        {
           "test_name_regex": "HwL3Test.*"
         },
         {
@@ -223,7 +223,31 @@
     ],
     "brcm/10.0_ea_odp/10.0_ea_odp/tomahawk5": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -231,7 +255,31 @@
     ],
     "brcm/10.0_ea_sim_odp/10.0_ea_sim_odp/tomahawk4/simulator": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -323,7 +371,31 @@
     ],
     "brcm/10.0_ea_sim_odp/10.0_ea_sim_odp/tomahawk5/simulator": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -415,6 +487,27 @@
     ],
     "brcm/11.0_ea_dnx_odp/11.0_ea_dnx_odp/jericho2": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "HwEcmpTest.Ucmp.*"
         },
         {
@@ -452,12 +545,6 @@
         },
         {
           "test_name_regex": "HwCoppTest/1.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTest.*"
         },
         {
           "test_name_regex": "HwRouteCounterOverflowTest.*"
@@ -578,21 +665,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "HwL3Test.*"
@@ -636,6 +708,27 @@
     ],
     "brcm/11.0_ea_dnx_odp/11.0_ea_dnx_odp/jericho3": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "HwEcmpTest.Ucmp.*"
         },
         {
@@ -673,12 +766,6 @@
         },
         {
           "test_name_regex": "HwCoppTest/1.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTrafficTest.*"
-        },
-        {
-          "test_name_regex": "HwTeFlowTest.*"
         },
         {
           "test_name_regex": "HwRouteCounterOverflowTest.*"
@@ -799,21 +886,6 @@
         },
         {
           "test_name_regex": "HwUdfAcl.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*"
-        },
-        {
-          "test_name_regex": "HwEcmpFlowletSwitching.*"
-        },
-        {
-          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*"
         },
         {
           "test_name_regex": "HwL3Test.*"
@@ -860,12 +932,57 @@
     ],
     "brcm/11.0_ea_dnx_odp/11.0_ea_dnx_odp/jericho3/simulator": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "HwLoadBalancerTestV[46].Ucmp.*$"
         }
     ],
     "brcm/7.2.0.0_odp/7.2.0.0_odp/tomahawk": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -873,7 +990,31 @@
     ],
     "brcm/7.2.0.0_odp/7.2.0.0_odp/tomahawk3": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -881,7 +1022,31 @@
     ],
     "brcm/7.2.0.0_odp/8.2.0.0_odp/tomahawk": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -889,7 +1054,31 @@
     ],
     "brcm/7.2.0.0_odp/8.2.0.0_odp/tomahawk3": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -897,7 +1086,31 @@
     ],
     "brcm/8.2.0.0_odp/8.2.0.0_odp/tomahawk": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -905,7 +1118,31 @@
     ],
     "brcm/8.2.0.0_odp/8.2.0.0_odp/tomahawk3": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -913,7 +1150,31 @@
     ],
     "brcm/8.2.0.0_odp/8.2.0.0_odp/tomahawk4": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -921,7 +1182,31 @@
     ],
     "brcm/8.2.0.0_odp/9.2.0.0_odp/tomahawk": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -929,7 +1214,31 @@
     ],
     "brcm/8.2.0.0_odp/9.2.0.0_odp/tomahawk3": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -937,7 +1246,31 @@
     ],
     "brcm/8.2.0.0_odp/9.2.0.0_odp/tomahawk4": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -945,7 +1278,31 @@
     ],
     "brcm/8.2.0.0_sim_odp/8.2.0.0_sim_odp/tomahawk4/simulator": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -1037,7 +1394,31 @@
     ],
     "brcm/9.2.0.0_odp/9.2.0.0_odp/tomahawk": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -1045,7 +1426,31 @@
     ],
     "brcm/9.2.0.0_odp/9.2.0.0_odp/tomahawk3": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
@@ -1053,13 +1458,58 @@
     ],
     "brcm/9.2.0.0_odp/9.2.0.0_odp/tomahawk4": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         },
         {
           "test_name_regex": "HwAqmTest.verifyPerQueueEcnMarkedStats$"
         }
     ],
     "leaba/1.42.8/1.42.8/gibraltar": [
+        {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
         {
           "test_name_regex": "HwDscpQueueMappingTest.VerifyAclAndQosMapConflict$"
         },
@@ -1102,17 +1552,89 @@
     ],
     "leaba/1.42.8/1.42.8/simulator": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         }
     ],
     "leaba/1.65.0/1.65.0/gibraltar": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         }
     ],
     "leaba/1.68.0/1.68.0/graphene200/simulator": [
         {
+          "test_name_regex": "HwFlowletAclCounterTest.*$"
+        },
+        {
+          "test_name_regex": "HwFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwEcmpFlowletSwitching.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6Flowlet.*$"
+        },
+        {
+          "test_name_regex": "HwLoadBalancerTestV6EcmpToFlowlet.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTest.*$"
+        },
+        {
+          "test_name_regex": "HwTeFlowTrafficTest.*$"
+        },
+        {
           "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*PROFILE_100G_2_PAM4_RS544X2N_COPPER.TestProfile"
+        },
+        {
+          "test_name_regex": "roundtrip.trunk_2_preprod_2_trunk.*SaiAclTableGroupTest.RepositionAclEntriesPostWarmboot"
         }
     ]
   }

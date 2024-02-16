@@ -12,9 +12,9 @@
 #include "fboss/agent/hw/test/HwLinkStateDependentTest.h"
 #include "fboss/agent/hw/test/HwTestAclUtils.h"
 #include "fboss/agent/hw/test/HwTestPacketUtils.h"
-#include "fboss/agent/hw/test/TrafficPolicyUtils.h"
 #include "fboss/agent/test/EcmpSetupHelper.h"
 #include "fboss/agent/test/ResourceLibUtil.h"
+#include "fboss/agent/test/utils/TrafficPolicyTestUtils.h"
 #include "fboss/lib/CommonUtils.h"
 
 namespace facebook::fboss {
@@ -54,7 +54,12 @@ class HwDscpQueueMappingTest : public HwLinkStateDependentTest {
       utility::addDscpAclToCfg(&newCfg, kAclName, kDscp());
       utility::addTrafficCounter(
           &newCfg, kCounterName(), utility::getAclCounterTypes(getHwSwitch()));
-      utility::addQueueMatcher(&newCfg, kAclName, kQueueId(), kCounterName());
+      utility::addQueueMatcher(
+          &newCfg,
+          kAclName,
+          kQueueId(),
+          this->getHwSwitchEnsemble()->isSai(),
+          kCounterName());
 
       applyNewConfig(newCfg);
     };
@@ -189,7 +194,12 @@ class HwDscpQueueMappingTest : public HwLinkStateDependentTest {
       utility::addDscpAclToCfg(&newCfg, "acl0", kDscp());
       utility::addTrafficCounter(
           &newCfg, kCounterName(), utility::getAclCounterTypes(getHwSwitch()));
-      utility::addQueueMatcher(&newCfg, "acl0", kQueueIdAcl(), kCounterName());
+      utility::addQueueMatcher(
+          &newCfg,
+          "acl0",
+          kQueueIdAcl(),
+          this->getHwSwitchEnsemble()->isSai(),
+          kCounterName());
 
       applyNewConfig(newCfg);
     };

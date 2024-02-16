@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "fboss/agent/hw/common/LanePrbsStatsEntry.h"
 #include "fboss/agent/hw/gen-cpp2/hardware_stats_types.h"
 #include "fboss/agent/hw/sai/api/PortApi.h"
 #include "fboss/agent/hw/sai/store/SaiObjectWithCounters.h"
@@ -42,6 +43,7 @@ class SaiStore;
 using SaiPort = SaiObjectWithCounters<SaiPortTraits>;
 using SaiPortSerdes = SaiObject<SaiPortSerdesTraits>;
 using SaiPortConnector = SaiObject<SaiPortConnectorTraits>;
+using LanePrbsStatsTable = std::vector<LanePrbsStatsEntry>;
 
 /*
  * Cache port mirror data from sw switch
@@ -119,6 +121,9 @@ struct SaiPortHandle {
 class SaiPortManager {
   using Handles = folly::F14FastMap<PortID, std::unique_ptr<SaiPortHandle>>;
   using Stats = folly::F14FastMap<PortID, std::unique_ptr<HwPortFb303Stats>>;
+
+  static constexpr double kSpeedConversionFactor = 1000.0;
+  static constexpr double kLaneRateConversionFactor = 1024. * 1024. * 1024.;
 
  public:
   SaiPortManager(
@@ -199,6 +204,7 @@ class SaiPortManager {
       PortSaiId portSaiId,
       cfg::SwitchType switchType) const;
 
+  std::vector<phy::PrbsLaneStats> getPortAsicPrbsStats(PortID portId);
   void updateStats(PortID portID, bool updateWatermarks = false);
 
   void clearStats(PortID portID);
@@ -365,6 +371,8 @@ class SaiPortManager {
   void setPortType(PortID portId, cfg::PortType portType);
   void programPfcBuffers(const std::shared_ptr<Port>& swPort);
   void removePfcBuffers(const std::shared_ptr<Port>& swPort);
+  sai_port_prbs_config_t getSaiPortPrbsConfig(bool enabled) const;
+  void initAsicPrbsStats(const std::shared_ptr<Port>& swPort);
   void removeIngressPriorityGroupMappings(SaiPortHandle* portHandle);
   void applyPriorityGroupBufferProfile(
       const std::shared_ptr<Port>& swPort,
@@ -404,6 +412,7 @@ class SaiPortManager {
   // retain removed port handle so it does not invoke remove port api.
   Handles removedHandles_;
   Stats portStats_;
+  std::map<PortID, LanePrbsStatsTable> portAsicPrbsStats_;
 
   std::optional<SaiPortTraits::Attributes::PtpMode> getPtpMode() const;
   std::unordered_map<PortID, cfg::PortType> port2PortType_;
